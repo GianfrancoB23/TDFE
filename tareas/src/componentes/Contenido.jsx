@@ -6,14 +6,7 @@ const Contenido = () => {
 
   const [tareas, setTareas] = useState([]);
 
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/todos?userId=1")
-      .then(r => r.json())
-      .then(datos => {
-        setTareas(datos);
-      })
 
-  }, [])
 
   const agregarTarea = (textoTarea) => {
     console.log("Agregar tarea - componente Contenido");
@@ -40,7 +33,7 @@ const Contenido = () => {
   return (
     <div className="contenido">
       <Input_Agregar agregarTarea={agregarTarea} />
-      <Contenedor_Tarjetas tareas={tareas} />
+      <Contenedor_Tarjetas />
     </div>
   )
 }
