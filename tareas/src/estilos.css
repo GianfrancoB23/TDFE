@@ -10,6 +10,11 @@ body{
   display: block !important;
 }
 
+.active{
+  background-color: #a11858;
+  color: #F0F0F0;
+}
+
 #root {
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;

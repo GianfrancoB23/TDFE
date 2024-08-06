@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Tarjeta1 from './Tarjeta1'
 import { useDispatch, useSelector } from 'react-redux'
-import { guardarTareas } from '../features/tareasSlice';
+import { guardarTareas } from '../../features/tareasSlice';
 
 const Contenedor_Tarjetas = () => {
 

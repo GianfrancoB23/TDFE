@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux"
-import { incrementar } from "../features/contadorSlice";
+import { incrementar } from "../../features/contadorSlice";
 
 const Botones = () => {
 

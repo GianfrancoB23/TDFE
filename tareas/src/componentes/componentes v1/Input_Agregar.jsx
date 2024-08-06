@@ -1,6 +1,6 @@
 import React, { useId, useRef } from 'react'
 import { useDispatch } from 'react-redux';
-import { guardarTarea } from '../features/tareasSlice';
+import { guardarTarea } from '../../features/tareasSlice';
 
 const Input_Agregar = () => {
 
