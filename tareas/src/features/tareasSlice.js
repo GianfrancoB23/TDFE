@@ -10,10 +10,13 @@ export const tareasSlice = createSlice({
     reducers: {
         guardarTareas: (state, action) => {
             //immer 
-            console.log(action);
+            state.tareas = action.payload;
+        },
+        guardarTarea: (state,action) => {
+            state.tareas.push(action.payload);
         }
     }
 })
 
-export const { guardarTareas } = tareasSlice.actions;
+export const { guardarTareas, guardarTarea } = tareasSlice.actions;
 export default tareasSlice.reducer;
