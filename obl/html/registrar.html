@@ -35,33 +35,32 @@
     </nav>
 
 
-    <div class="container">
+    <div>
         <h2>Registro en la Aplicación</h2>
-        <form id="registrationForm">
-            <div class="form-group">
+
                 <label for="username">Usuario</label>
-                <input type="text" class="form-control" id="username" placeholder="Ingrese su usuario" required>
-            </div>
-            <div class="form-group">
+                <input type="text" class="form-control" id="username" placeholder="Ingrese su usuario">
+
+
                 <label for="password">Contraseña</label>
-                <input type="password" class="form-control" id="password" placeholder="Ingrese su contraseña" required>
-            </div>
-            <div class="form-group">
+                <input type="password" class="form-control" id="password" placeholder="Ingrese su contraseña">
+
+
                 <label for="department">Departamento</label>
-                <select class="form-control" id="department" required>
+                <select class="form-control" id="department">
                     <option value="">Seleccione un departamento</option>
                     <!-- Opciones de departamentos -->
                 </select>
-            </div>
-            <div class="form-group">
+
+
                 <label for="city">Ciudad</label>
-                <select class="form-control" id="city" required>
+                <select class="form-control" id="city" >
                     <option value="">Seleccione una ciudad</option>
-                    <!-- Opciones de ciudades se llenarán dinámicamente -->
+
                 </select>
-            </div>
+
             <button type="submit" class="btn btn-primary mt-2">Registrar</button>
-        </form>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

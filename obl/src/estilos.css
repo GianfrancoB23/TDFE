@@ -1,0 +1,13 @@
+@charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+  }
+
+/* .active{
+  background-color: #0084ff;
+  color: #000000;
+  border-radius: 5px;
+} */
