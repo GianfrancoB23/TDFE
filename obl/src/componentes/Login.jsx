@@ -5,6 +5,8 @@ import { useId, useRef } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 const Login = () => {
+    
+    const apiURL = "https://babytracker.develotion.com/"
 
     const idUserLogin = useId();
     const idPassLogin = useId();
@@ -18,6 +20,19 @@ const Login = () => {
         const user = userCampoLogin.current.value;
         const pass = passCampoLogin.current.value;
         console.log(user, pass);
+        let objUser = {
+            "usuario": user,
+            "password" : pass
+        }
+        fetch(apiURL + "login.php", {
+            method: "POST",
+            body: JSON.stringify(objUser),
+            headers: {"Content-type":"application/json"},
+        }).then((response) => response.json()).then((json) => {
+            console.log(json);
+            localStorage.setItem("apiKey", json.apiKey)
+            localStorage.setItem("userId", json.id)
+        })
 
         if (user === "a" && pass === "a") {
             localStorage.setItem("user", user);
