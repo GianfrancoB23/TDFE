@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 /* import '../bootstrap.min.css' */
 
-import { useId, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {useId, useRef} from "react";
+import {Link, useNavigate} from "react-router-dom";
 
 const Login = () => {
   const apiURL = "https://babytracker.develotion.com/";
@@ -10,8 +10,15 @@ const Login = () => {
   const idUserLogin = useId();
   const idPassLogin = useId();
 
-  const userCampoLogin = useRef(null);
-  const passCampoLogin = useRef(null);
+  const userCampoLogin = useRef("");
+  const passCampoLogin = useRef("");
+  //const [userCampoLogin, setUserCampoLogin] = useState("");
+  //const [passCampoLogin, setPassCampoLogin] = useState("");
+
+  const handleUser = (e) =>
+    (userCampoLogin.current.textContent = e.target.value);
+  const handlePassword = (e) =>
+    (passCampoLogin.current.textContent = e.target.value);
 
   const navigate = useNavigate();
 
@@ -27,17 +34,17 @@ const Login = () => {
       fetch(apiURL + "login.php", {
         method: "POST",
         body: JSON.stringify(objUser),
-        headers: { "Content-type": "application/json" },
+        headers: {"Content-type": "application/json"},
       })
         .then((response) => response.json())
         .then((json) => {
           console.log(json);
           localStorage.setItem("apiKey", json.apiKey);
-          localStorage.setItem("userId", json.id);
+          localStorage.setItem("id", json.id);
         });
     } else {
       //toast.error("Debe completar ambos campos.");
-      console.log("Debe completar ambos campos");      
+      console.log("Debe completar ambos campos");
     }
   };
 
@@ -45,19 +52,35 @@ const Login = () => {
     <div className="justify-content-center align-items-center text-center">
       <h1>LOGIN</h1>
       <label htmlFor={idUserLogin}>User: </label>
-      <input type="text" id={idUserLogin} ref={userCampoLogin} />
+      <input
+        type="text"
+        id={idUserLogin}
+        ref={userCampoLogin}
+        onChange={this.handleUser}
+      />
       <br />
       <label htmlFor={idPassLogin}>Pass: </label>
-      <input type="text" id={idPassLogin} ref={passCampoLogin} />
+      <input
+        type="text"
+        id={idPassLogin}
+        ref={passCampoLogin}
+        // onChange={this.handlePassword}
+      />
       <br />
       <input
         type="button"
         value="Ingresar"
         onClick={ingresar}
         className="mt-2"
+        /* disabled={
+          !this.userCampoLogin ||
+          this.userCampoLogin == "" ||
+          this.passCampoLogin == "" ||
+          !this.passCampoLogin
+        } */
       />
       <br />
-      <Link to="/Registrar">Ir a registrarse</Link>
+      <Link to="/Registro">Ir a registrarse</Link>
     </div>
   );
 };
