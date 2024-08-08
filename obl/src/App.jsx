@@ -1,19 +1,18 @@
-import './estilos.css'
-import './bootstrap.min.css'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { store } from './store/store'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { Provider } from 'react-redux'
+import "./estilos.css";
+import "./bootstrap.min.css";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {store} from "./store/store";
+import {ToastContainer, toast} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import {Provider} from "react-redux";
 
-import Contenedor from './componentes/Contenedor'
-import Login from './componentes/Login'
-import Registro from './componentes/Registro'
-import NoEncontrado from './componentes/NoEncontrado'
-import Dashboard from './componentes/Dashboard';
+import Contenedor from "./componentes/Contenedor";
+import Login from "./componentes/Login";
+import Registro from "./componentes/Registro";
+import NoEncontrado from "./componentes/NoEncontrado";
+import Dashboard from "./componentes/Dashboard";
 
 function App() {
-
   return (
     <Provider store={store}>
       <BrowserRouter>
@@ -28,8 +27,7 @@ function App() {
       </BrowserRouter>
       <ToastContainer />
     </Provider>
-    
-  )
+  );
 }
 
-export default App
+export default App;

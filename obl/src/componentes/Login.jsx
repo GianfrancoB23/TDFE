@@ -1,30 +1,36 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 /* import '../bootstrap.min.css' */
 
 import {useId, useRef} from "react";
 import {Link, useNavigate} from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("apiKey") != null) {
+      navigate("/Dashboard");
+    }
+  }, [navigate]);
   const apiURL = "https://babytracker.develotion.com/";
 
   const idUserLogin = useId();
   const idPassLogin = useId();
 
-  const userCampoLogin = useRef("");
-  const passCampoLogin = useRef("");
-  //const [userCampoLogin, setUserCampoLogin] = useState("");
-  //const [passCampoLogin, setPassCampoLogin] = useState("");
+  //const userCampoLogin = useRef("");
+  //const passCampoLogin = useRef("");
+  const [userCampoLogin, setUserCampoLogin] = useState("");
+  const [passCampoLogin, setPassCampoLogin] = useState("");
 
-  const handleUser = (e) =>
+  /* const handleUser = (e) =>
     (userCampoLogin.current.textContent = e.target.value);
   const handlePassword = (e) =>
-    (passCampoLogin.current.textContent = e.target.value);
-
-  const navigate = useNavigate();
+    (passCampoLogin.current.textContent = e.target.value); */
 
   const ingresar = () => {
-    const user = userCampoLogin.current.value;
-    const pass = passCampoLogin.current.value;
+    /*  const user = userCampoLogin.current.value;
+    const pass = passCampoLogin.current.value; */
+    const user = userCampoLogin;
+    const pass = passCampoLogin;
     console.log(user, pass);
     if (user && pass) {
       let objUser = {
@@ -55,16 +61,16 @@ const Login = () => {
       <input
         type="text"
         id={idUserLogin}
-        ref={userCampoLogin}
-        onChange={this.handleUser}
+        //ref={userCampoLogin}
+        onChange={(e) => setUserCampoLogin(e.target.value)}
       />
       <br />
       <label htmlFor={idPassLogin}>Pass: </label>
       <input
         type="text"
         id={idPassLogin}
-        ref={passCampoLogin}
-        // onChange={this.handlePassword}
+        //ref={passCampoLogin}
+        onChange={(e) => setPassCampoLogin(e.target.value)}
       />
       <br />
       <input
