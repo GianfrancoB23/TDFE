@@ -1,64 +1,71 @@
-import React from 'react'
+import React from "react";
 /* import '../bootstrap.min.css' */
 
-import { useId, useRef } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useId, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
-    
-    const apiURL = "https://babytracker.develotion.com/"
+  const apiURL = "https://babytracker.develotion.com/";
 
-    const idUserLogin = useId();
-    const idPassLogin = useId();
+  const idUserLogin = useId();
+  const idPassLogin = useId();
 
-    const userCampoLogin = useRef(null);
-    const passCampoLogin = useRef(null);
+  const userCampoLogin = useRef(null);
+  const passCampoLogin = useRef(null);
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const ingresar = () => {
-        const user = userCampoLogin.current.value;
-        const pass = passCampoLogin.current.value;
-        console.log(user, pass);
-        let objUser = {
-            "usuario": user,
-            "password" : pass
-        }
-        fetch(apiURL + "login.php", {
-            method: "POST",
-            body: JSON.stringify(objUser),
-            headers: {"Content-type":"application/json"},
-        }).then((response) => response.json()).then((json) => {
-            console.log(json);
-            localStorage.setItem("apiKey", json.apiKey)
-            localStorage.setItem("userId", json.id)
-        })
-
-        if (user === "a" && pass === "a") {
-            localStorage.setItem("user", user);
-            navigate("/clima");
-        } else {
-            toast.error("Usuario y/o contrasena incorrectos");
-        }
+  const ingresar = () => {
+    const user = userCampoLogin.current.value;
+    const pass = passCampoLogin.current.value;
+    console.log(user, pass);
+    if (user && pass) {
+      let objUser = {
+        usuario: user,
+        password: pass,
+      };
+      fetch(apiURL + "login.php", {
+        method: "POST",
+        body: JSON.stringify(objUser),
+        headers: { "Content-type": "application/json" },
+      })
+        .then((response) => response.json())
+        .then((json) => {
+          console.log(json);
+          localStorage.setItem("apiKey", json.apiKey);
+          localStorage.setItem("userId", json.id);
+        });
+    } else {
+      //toast.error("Debe completar ambos campos.");
+      console.log("Debe completar ambos campos");      
     }
+  };
 
-    return (
-        <div className='justify-content-center align-items-center text-center'>
-            <h1>LOGIN</h1>
-            <label htmlFor={idUserLogin}>User: </label>
-            <input type="text" id={idUserLogin} ref={userCampoLogin} /><br />
-            <label htmlFor={idPassLogin}>Pass: </label>
-            <input type="text" id={idPassLogin} ref={passCampoLogin} /><br />
-            <input type="button" value="Ingresar" onClick={ingresar} className='mt-2'/>
-            <br />
-            <Link to="/Registrar">Ir a registrarse</Link>
-        </div>
-    )
-}
+  return (
+    <div className="justify-content-center align-items-center text-center">
+      <h1>LOGIN</h1>
+      <label htmlFor={idUserLogin}>User: </label>
+      <input type="text" id={idUserLogin} ref={userCampoLogin} />
+      <br />
+      <label htmlFor={idPassLogin}>Pass: </label>
+      <input type="text" id={idPassLogin} ref={passCampoLogin} />
+      <br />
+      <input
+        type="button"
+        value="Ingresar"
+        onClick={ingresar}
+        className="mt-2"
+      />
+      <br />
+      <Link to="/Registrar">Ir a registrarse</Link>
+    </div>
+  );
+};
 
-export default Login
+export default Login;
 
-{/* 
+{
+  /* 
 <div className="container d-flex justify-content-center align-items-center vh-100">
 <div className="card shadow-sm" style={{ width: "100%", maxWidth: 400 }}>
     <div className="card-body">
@@ -91,4 +98,5 @@ export default Login
     </div>
 </div>
 </div> 
-*/}
+*/
+}
