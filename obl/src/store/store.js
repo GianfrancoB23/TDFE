@@ -1,11 +1,9 @@
-import {configureStore} from "@reduxjs/toolkit"
-
+import { configureStore } from "@reduxjs/toolkit"
+import departamentosReducer from "../features/departamentosSlice"
 
 export const store = configureStore({
     reducer: {
-        contador: contadorReducer,
-        tareas: tareasReducer,
-        pronostico : pronosticoReducer
+        departamentos: departamentosReducer,
     }
 })
 
