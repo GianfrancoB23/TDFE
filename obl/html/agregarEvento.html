@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Evento</title>
+    <!-- Agregar el enlace al CSS de Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Formulario de Evento</h1>
+
+        <div class="form-group">
+            <label for="categorySelect">Categoría</label>
+            <select class="form-control" id="categorySelect" name="category" required>
+                <option value="">Selecciona una categoría</option>
+                <option value="1">Categoría 1</option>
+                <option value="2">Categoría 2</option>
+                <option value="3">Categoría 3</option>
+                <!-- Agregar más categorías según sea necesario -->
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="eventDate">Fecha y Hora del Evento</label>
+            <input type="datetime-local" class="form-control" id="eventDate" name="eventDate" required>
+        </div>
+
+        <div class="form-group">
+            <label for="details">Detalles</label>
+            <textarea class="form-control" id="details" name="details" rows="3"
+                placeholder="Detalles opcionales"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">CARGAR</button>
+
+    </div>
+
+    <!-- Agregar el enlace al JS de Bootstrap y dependencias -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('eventForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            var category = document.getElementById('categorySelect').value;
+            var eventDate = document.getElementById('eventDate').value;
+            var details = document.getElementById('details').value;
+
+            if (!category) {
+                alert('Por favor, selecciona una categoría.');
+                return;
+            }
+
+            // Obtener la fecha y hora actual
+            var now = new Date();
+            var nowISOString = now.toISOString().slice(0, 16);
+
+            // Validar la fecha ingresada
+            if (eventDate && eventDate > nowISOString) {
+                alert('La fecha y hora del evento no pueden ser posteriores a la fecha y hora actual.');
+                return;
+            }
+
+            // Si no se proporciona fecha, usar la actual
+            if (!eventDate) {
+                eventDate = nowISOString;
+            }
+
+            // Aquí puedes manejar el envío del formulario, por ejemplo, enviarlo a una API
+            console.log('Categoría:', category);
+            console.log('Fecha y Hora del Evento:', eventDate);
+            console.log('Detalles:', details);
+
+            // Ejemplo de alert para mostrar los datos
+            alert(`Categoría: ${category}\nFecha y Hora del Evento: ${eventDate}\nDetalles: ${details}`);
+        });
+    </script>
+</body>
+
+</html>

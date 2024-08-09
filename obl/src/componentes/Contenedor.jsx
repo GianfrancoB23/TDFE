@@ -27,6 +27,9 @@ const Contenedor = () => {
                                 <NavLink className="nav-link" to="/Registro">REGISTRO</NavLink>
                             </li>
                             <li className="nav-item">
+                                <NavLink className="nav-link" to="/AgregarEvento">AGREGAR EVENTO</NavLink>
+                            </li>
+                            <li className="nav-item">
                                 <Link className="nav-link" to="/Login" onClick={logout}>LOGOUT</Link>
                             </li>
                         </ul>

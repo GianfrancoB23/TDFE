@@ -11,6 +11,7 @@ import Login from "./componentes/Login";
 import Registro from "./componentes/Registro";
 import NoEncontrado from "./componentes/NoEncontrado";
 import Dashboard from "./componentes/Dashboard";
+import AgregarEvento from "./componentes/DashboardComp/AgregarEvento";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/Login" element={<Login />} />
             <Route path="/Registro" element={<Registro />} />
             <Route path="/Dashboard" element={<Dashboard />} />
+            <Route path="/AgregarEvento" element={<AgregarEvento />} />
             <Route path="*" element={<NoEncontrado />} />
           </Route>
         </Routes>
