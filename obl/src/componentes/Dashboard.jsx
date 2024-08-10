@@ -1,9 +1,14 @@
-import React from 'react'
+import React, {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const Dashboard = () => {
-  return (
-    <div>Dashboard</div>
-  )
-}
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (localStorage.getItem("apiKey") == null) {
+      navigate("/Login");
+    }
+  }, [navigate]);
+  return <div>Dashboard</div>;
+};
 
-export default Dashboard
+export default Dashboard;

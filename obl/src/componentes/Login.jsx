@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from "react";
+import {toast} from "react-toastify";
 /* import '../bootstrap.min.css' */
 
 import {useId, useRef} from "react";
@@ -42,14 +43,21 @@ const Login = () => {
         body: JSON.stringify(objUser),
         headers: {"Content-type": "application/json"},
       })
-        .then((response) => response.json())
+        .then((response) => {
+          return response.json();
+        })
         .then((json) => {
           console.log(json);
-          localStorage.setItem("apiKey", json.apiKey);
-          localStorage.setItem("id", json.id);
+          if (json.apiKey) {
+            localStorage.setItem("apiKey", json.apiKey);
+            localStorage.setItem("id", json.id);
+            navigate("/Dashboard");
+          } else {
+            toast.error(json.codigo + ": " + json.mensaje);
+          }
         });
     } else {
-      //toast.error("Debe completar ambos campos.");
+      toast.error("Debe completar ambos campos.");
       console.log("Debe completar ambos campos");
     }
   };
@@ -78,12 +86,12 @@ const Login = () => {
         value="Ingresar"
         onClick={ingresar}
         className="mt-2"
-        /* disabled={
-          !this.userCampoLogin ||
-          this.userCampoLogin == "" ||
-          this.passCampoLogin == "" ||
-          !this.passCampoLogin
-        } */
+        disabled={
+          !userCampoLogin ||
+          userCampoLogin == "" ||
+          passCampoLogin == "" ||
+          !passCampoLogin
+        }
       />
       <br />
       <Link to="/Registro">Ir a registrarse</Link>
