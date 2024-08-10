@@ -1,8 +1,6 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useId, useRef} from "react";
 import {toast} from "react-toastify";
 /* import '../bootstrap.min.css' */
-
-import {useId, useRef} from "react";
 import {Link, useNavigate} from "react-router-dom";
 
 const Login = () => {
@@ -58,7 +56,6 @@ const Login = () => {
         });
     } else {
       toast.error("Debe completar ambos campos.");
-      console.log("Debe completar ambos campos");
     }
   };
 
