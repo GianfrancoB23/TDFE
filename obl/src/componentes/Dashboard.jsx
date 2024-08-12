@@ -6,6 +6,7 @@ import {guardarEventos} from "../features/eventosSlice";
 import AgregarEvento from "./DashboardComp/AgregarEvento";
 import ListadoEvento from "./DashboardComp/ListadoEvento";
 import InformeEventos from "./DashboardComp/InformeEventos";
+import GraficosEventos from "./DashboardComp/GraficosEventos";
 
 const Dashboard = () => {
   const urlAPI = "https://babytracker.develotion.com/";
@@ -69,8 +70,9 @@ const Dashboard = () => {
     <div>
       <h2>Dashboard</h2>
       <InformeEventos eventos={eventos} ctdBiberonesDia={ctdBiberonesDia} ctdPanalesDia={ctdPanalesDia} />
-      <AgregarEvento cats={cats}/>;
-      <ListadoEvento eventos={eventos} cats={cats}/>;
+      <AgregarEvento cats={cats}/>
+      <ListadoEvento eventos={eventos} cats={cats}/>
+      <GraficosEventos eventos={eventos} cats={cats} titleGraph="Cantidades por categoria" detalle="Eventos" />
     </div>
   );
 };

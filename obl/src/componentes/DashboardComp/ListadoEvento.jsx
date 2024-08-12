@@ -11,36 +11,7 @@ const ListadoEventos = ({ eventos, cats }) => {
   const dispatch = useDispatch();
   const urlAPI = "https://babytracker.develotion.com/";
   const urlIMG = "https://babytracker.develotion.com/imgs/";
-  /* useEffect(() => {
-    if (localStorage.getItem("apiKey") == null) {
-      navigate("/Dashboard");
-    } else {
-      fetch(`${urlAPI}categorias.php`, {
-        headers: {
-          "Content-type": "application/json",
-          apikey: localStorage.getItem("apiKey"),
-          iduser: localStorage.getItem("id"),
-        },
-      })
-        .then((r) => r.json())
-        .then((datos) => {
-          dispatch(guardarCategorias(datos.categorias));
-        });
-      fetch(`${urlAPI}eventos.php?idUsuario=${localStorage.getItem("id")}`, {
-        headers: {
-          "Content-type": "application/json",
-          apikey: localStorage.getItem("apiKey"),
-          iduser: localStorage.getItem("id"),
-        },
-      })
-        .then((r) => r.json())
-        .then((datos) => {
-          dispatch(guardarEventos(datos.eventos));
-        });
-    }
-  }, []); */
-
-  /* const cats = useSelector((state) => state.categorias.categorias);
+  /* const cats = useSelector((state) => state.categorias.categorias); 
   
   const eventos = useSelector((state) => state.eventos.eventos); */
   console.log(cats);
@@ -65,13 +36,15 @@ const ListadoEventos = ({ eventos, cats }) => {
       <div className="row justify-content-center">
         {eventos
           .filter((evento) => filtroFecha(evento.fecha))
-          .map((evento) => (
+          .map((evento, index) => (
             <Tarjeta
               categoria={cats
                 .filter((cat) => cat.id == evento.idCategoria)
                 .map((cat) => cat)}
               fecha={evento.fecha}
               detalle={evento.detalle}
+              id={evento.id}
+              key={index}
             />
           ))}
       </div>
@@ -80,13 +53,15 @@ const ListadoEventos = ({ eventos, cats }) => {
       <div className="row justify-content-center">
         {eventos
           .filter((evento) => !filtroFecha(evento.fecha))
-          .map((evento) => (
+          .map((evento, index) => (
             <Tarjeta
               categoria={cats
                 .filter((cat) => cat.id == evento.idCategoria)
                 .map((cat) => cat)}
               fecha={evento.fecha}
               detalle={evento.detalle}
+              id={evento.id}
+              key={index}
             />
           ))}
       </div>

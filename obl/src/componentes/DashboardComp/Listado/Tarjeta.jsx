@@ -1,6 +1,8 @@
-const Tarjeta = ({categoria, fecha, detalle}) => {
+import EliminarEvento from "./EliminarEvento";
+
+const Tarjeta = ({categoria, id, fecha, detalle}) => {
   
-  const urlIMG = "https://babytracker.develotion.com/imgs/"; 
+  const urlIMG = "https://babytracker.develotion.com/imgs/";  
   
   return  <div className="col-sm-6 col-md-4 col-lg-3 col-xl-2 pb-4">
     <div className="card">
@@ -20,9 +22,10 @@ const Tarjeta = ({categoria, fecha, detalle}) => {
       <div className="card-body">
         <h5 className="card-title">{fecha}</h5>
         <p className="card-text">{detalle}</p>
-        <a href="#" className="btn btn-danger">
+        {/* <a href="#" className="btn btn-danger">
           Eliminar content
-        </a>
+        </a> */}
+        <EliminarEvento idEvento={id} key={id} />
       </div>
     </div>
   </div>;
