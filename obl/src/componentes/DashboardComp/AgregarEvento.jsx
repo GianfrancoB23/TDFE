@@ -1,8 +1,8 @@
-import React, { useId, useEffect, useRef, useState } from "react";
-import { toast } from "react-toastify";
-import { useNavigate, Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { guardarCategorias } from "../../features/categoriasSlice";
+import React, {useId, useEffect, useRef, useState} from "react";
+import {toast} from "react-toastify";
+import {useNavigate, Link} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {guardarCategorias} from "../../features/categoriasSlice";
 import departamentosSlice from "../../features/departamentosSlice";
 
 const AgregarEvento = () => {
@@ -22,8 +22,6 @@ const AgregarEvento = () => {
       })
         .then((r) => r.json())
         .then((datos) => {
-          console.log("Categorias", datos);
-
           dispatch(guardarCategorias(datos.categorias));
         });
     }
@@ -38,8 +36,7 @@ const AgregarEvento = () => {
   const idDetalles = useId();
 
   const cargarEvento = () => {
-
-    if(timeSel.length==0){
+    if (timeSel.length == 0) {
       setTimeSel(new Date());
     }
 
@@ -51,15 +48,14 @@ const AgregarEvento = () => {
         idUsuario: localStorage.getItem("id"),
         detalle: detSel,
         fecha: formatearFecha(timeSel),
-        
       };
-      
+
       fetch(`${urlAPI}/eventos.php`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "apikey": localStorage.getItem("apiKey"),
-          "iduser": localStorage.getItem("id")
+          apikey: localStorage.getItem("apiKey"),
+          iduser: localStorage.getItem("id"),
         },
         body: JSON.stringify(data),
       })
@@ -67,7 +63,7 @@ const AgregarEvento = () => {
         .then((data) => {
           console.log("Respuesta:", data);
           if (data.codigo == 200) {
-            toast.success('Evento cargado con exito!', {
+            toast.success("Evento cargado con exito!", {
               position: "top-right",
               autoClose: 5000,
               hideProgressBar: false,
@@ -91,9 +87,8 @@ const AgregarEvento = () => {
             });
           }
         });
-
-    }else{
-      toast.warn('ERROR: Seleccione una categoria.', {
+    } else {
+      toast.warn("ERROR: Seleccione una categoria.", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -104,7 +99,7 @@ const AgregarEvento = () => {
         theme: "light",
       });
     }
-  }
+  };
 
   const seleccionarHora = (e) => {
     const inputFechaHora = e.target.value;
@@ -115,17 +110,22 @@ const AgregarEvento = () => {
     fechaActual.setHours(0, 0, 0, 0);
 
     if (nuevaFecha > fechaActual) {
-      toast.error(`ERROR: La fecha no puede ser superior a la actual ${formatearFecha(fechaActual)}`, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-      setTimeSel("")
+      toast.error(
+        `ERROR: La fecha no puede ser superior a la actual ${formatearFecha(
+          fechaActual
+        )}`,
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+      setTimeSel("");
     } else {
       setTimeSel(inputFechaHora);
     }
@@ -134,11 +134,11 @@ const AgregarEvento = () => {
   const formatearFecha = (fechSinFormatear) => {
     const date = new Date(fechSinFormatear);
     const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
 
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   };
@@ -155,8 +155,8 @@ const AgregarEvento = () => {
           id={idSlcCategoria}
           onChange={(e) => setCatSel(e.target.value)}
           defaultValue="">
-          <option value="" disabled hidden>
-            Seleccion
+          <option value="" disabled>
+            Seleccione
           </option>
           {cats.map((cat) => (
             <option key={cat.id} value={cat.id}>

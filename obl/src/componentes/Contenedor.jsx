@@ -11,7 +11,7 @@ const Contenedor = () => {
     <div className="container-fluid">
       <header className="row">
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <Link className="navbar-brand" to="/">
+          <Link className="navbar-brand" to="/Dashboard">
             BABY TRACKER
           </Link>
           <button
@@ -39,6 +39,11 @@ const Contenedor = () => {
               <li className="nav-item">
                 <NavLink className="nav-link" to="/AgregarEvento">
                   AGREGAR EVENTO
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/ListadoEvento">
+                  LISTADO EVENTOS
                 </NavLink>
               </li>
               <li className="nav-item">
