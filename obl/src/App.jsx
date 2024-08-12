@@ -13,6 +13,7 @@ import NoEncontrado from "./componentes/NoEncontrado";
 import Dashboard from "./componentes/Dashboard";
 import AgregarEvento from "./componentes/DashboardComp/AgregarEvento";
 import ListadoEvento from "./componentes/DashboardComp/ListadoEvento";
+import InformeEventos from "./componentes/DashboardComp/InformeEventos";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/Dashboard" element={<Dashboard />} />
             <Route path="/AgregarEvento" element={<AgregarEvento />} />
             <Route path="/ListadoEvento" element={<ListadoEvento />} />
+            <Route path="/InformeEventos" element={<InformeEventos />} />
             <Route path="*" element={<NoEncontrado />} />
           </Route>
         </Routes>

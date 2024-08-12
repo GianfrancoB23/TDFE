@@ -3,7 +3,6 @@ import {toast} from "react-toastify";
 import {useNavigate, Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {guardarCategorias} from "../../features/categoriasSlice";
-import departamentosSlice from "../../features/departamentosSlice";
 
 const AgregarEvento = () => {
   const navigate = useNavigate();
@@ -106,9 +105,6 @@ const AgregarEvento = () => {
     const nuevaFecha = new Date(inputFechaHora);
     const fechaActual = new Date();
 
-    // Comparar solo la fecha sin hora
-    fechaActual.setHours(0, 0, 0, 0);
-
     if (nuevaFecha > fechaActual) {
       toast.error(
         `ERROR: La fecha no puede ser superior a la actual ${formatearFecha(
@@ -131,6 +127,7 @@ const AgregarEvento = () => {
     }
   };
 
+  //Realizado con chatGPT para ahorrar tiempo.
   const formatearFecha = (fechSinFormatear) => {
     const date = new Date(fechSinFormatear);
     const year = date.getFullYear();

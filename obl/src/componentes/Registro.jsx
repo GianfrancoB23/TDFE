@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { guardarDepartamentos } from "../features/departamentosSlice";
 import { guardarCiudades } from "../features/ciudadesSlice";
 import { toast } from "react-toastify";
+import Contenedor from "./Contenedor";
 
 const Registro = () => {
     const navigate = useNavigate();

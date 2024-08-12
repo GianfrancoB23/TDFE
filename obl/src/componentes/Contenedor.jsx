@@ -1,11 +1,13 @@
 import React from "react";
-import {Link, NavLink, Outlet} from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 
 const Contenedor = () => {
   const logout = () => {
     //CERRAR SESION
     localStorage.clear();
   };
+
+  const apiKey = localStorage.getItem("apiKey");
 
   return (
     <div className="container-fluid">
@@ -26,31 +28,44 @@ const Contenedor = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
-              <li className="nav-item active">
-                <NavLink className="nav-link" to="/Login">
-                  LOGIN
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/Registro">
-                  REGISTRO
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/AgregarEvento">
-                  AGREGAR EVENTO
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink className="nav-link" to="/ListadoEvento">
-                  LISTADO EVENTOS
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/Login" onClick={logout}>
-                  LOGOUT
-                </Link>
-              </li>
+            {!apiKey && (
+                <>
+                  <li className="nav-item active">
+                    <NavLink className="nav-link" to="/Login">
+                      LOGIN
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/Registro">
+                      REGISTRO
+                    </NavLink>
+                  </li>
+                </>
+              )}
+              {apiKey && (
+                <>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/AgregarEvento">
+                      AGREGAR EVENTO
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/ListadoEvento">
+                      LISTADO EVENTOS
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink className="nav-link" to="/InformeEventos">
+                      INFORME EVENTOS
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <Link className="nav-link" to="/Login" onClick={logout}>
+                      LOGOUT
+                    </Link>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </nav>
