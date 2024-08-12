@@ -31,56 +31,70 @@ const AgregarEvento = () => {
   const cats = useSelector((state) => state.categorias.categorias);
   const [catSel, setCatSel] = useState("");
   const [timeSel, setTimeSel] = useState("");
+  const [detSel, setDetSel] = useState("");
 
-  const slcCategoria = useId();
+  const idSlcCategoria = useId();
+  const idFecHora = useId();
+  const idDetalles = useId();
 
   const loadCat = (e) => {};
+
+  const cargarEvento = () => {
+    const valorFecHora = fecHoraRef.current.value;
+    console.log("Categoria: ", catSel, "Fecha y Hora: ", timeSel, "Detalles: ", detSel);
+
+  }
 
   return (
     <div className="container">
       <h2>FORMULARIO DE EVENTO</h2>
       <div className="form-group mt-2">
-        <label htmlFor="categorySelect">Categoría</label>
+        <label htmlFor={idSlcCategoria}>Categoría</label>
         <select
           className="form-control"
-          id="categorySelect"
-          name="category"
+          name={idSlcCategoria}
           required=""
-          onChange={(e) => setCatSel(e.target.value)}>
+          id={idSlcCategoria}
+          onChange={(e) => setCatSel(e.target.value)}
+          defaultValue="">
+          <option value="" disabled hidden>
+              Seleccion
+          </option>
           {cats.map((cat) => (
             <option key={cat.id} value={cat.id}>
               {cat.tipo}
             </option>
           ))}
-          {/* agregar los opt */}
         </select>
       </div>
       <div className="form-group mt-2">
-        <label htmlFor="eventDate">Fecha y Hora del Evento</label>
+        <label htmlFor={idFecHora}>Fecha y Hora del Evento</label>
         <input
           type="datetime-local"
           className="form-control"
-          id="eventDate"
-          name="eventDate"
+          id={idFecHora}
+          name={idFecHora}
           required=""
           onChange={(e) => setTimeSel(e.target.value)}
         />
       </div>
       <div className="form-group mt-2">
-        <label htmlFor="details">Detalles</label>
+        <label htmlFor={idDetalles}>Detalles</label>
         <textarea
           className="form-control"
-          id="details"
-          name="details"
+          id={idDetalles}
+          name={idDetalles}
           rows={3}
           placeholder="Detalles opcionales"
+          onChange={(e) => setDetSel(e.target.value)}
           defaultValue={""}
         />
       </div>
       <button
         type="submit"
         className="btn btn-primary mt-2"
-        disabled={timeSel == "" || timeSel > Date.now()}>
+        disabled={timeSel == "" || timeSel > Date.now()}
+        onClick={cargarEvento}>
         CARGAR
       </button>
     </div>
