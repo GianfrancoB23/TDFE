@@ -32,7 +32,7 @@ const GraficosEventos = ({ eventos, cats, titleGraph, detalle }) => {
     },
   };
   return (
-    <div>
+    <div className="col-sm-4">
       <h2>PLACEHOLDER</h2>
       <Bar
         options={options}

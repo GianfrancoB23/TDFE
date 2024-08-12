@@ -73,6 +73,9 @@ const AgregarEvento = ({cats}) => {
               progress: undefined,
               theme: "light",
             });
+            data.id=datos.idEvento;
+            console.log(data);
+            
             dispatch(guardarEvento(data));
           } else {
             console.log(datos.codigo, datos.mensaje);
