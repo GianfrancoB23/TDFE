@@ -9,6 +9,7 @@ const ListadoEventos = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const urlAPI = "https://babytracker.develotion.com/";
+  const urlIMG = "https://babytracker.develotion.com/imgs/";
   useEffect(() => {
     if (localStorage.getItem("apiKey") == null) {
       navigate("/Dashboard");
@@ -40,14 +41,79 @@ const ListadoEventos = () => {
 
   const cats = useSelector((state) => state.categorias.categorias);
   const eventos = useSelector((state) => state.eventos.eventos);
+
+  const filtroFecha = (date) => {
+    let fecha = new Date(date);
+    let today = new Date();
+    let fYear = fecha.getFullYear();
+    let fMonth = fecha.getMonth();
+    let fDay = fecha.getDate();
+    let nYear = today.getFullYear();
+    let nMonth = today.getMonth();
+    let nDay = today.getDate();
+    console.log(`${fecha} || ${fYear} ${fMonth} ${fDay}`);
+    console.log(`${today} || ${nYear} ${nMonth} ${nDay}`);
+    console.log(fYear == nYear && fMonth == nMonth && fDay == nDay);
+    return fYear == nYear && fMonth == nMonth && fDay == nDay;
+  };
   console.log(cats);
   console.log(eventos);
 
   return (
-    <div>
-      FOO BAR
-      <h2>Hoy</h2>
-      <h2>Días anteriores</h2>
+    <div className="container justify-content-center align-items-center text-center ">
+      <h2>Listado de eventos</h2>
+      <div className="row justify-content-center">
+        <div className="col-sm-3">
+          <h3>Hoy</h3>
+          {eventos
+            .filter((evento) => filtroFecha(evento.fecha))
+            .map((evento) => (
+              <div className="card">
+                {cats
+                  .filter((cat) => cat.id == evento.idCategoria)
+                  .map((cat) => (
+                    <h5 className="card-header">
+                      {cat.tipo}
+                      <img src={`${urlIMG}${cat.imagen}.png`} />
+                    </h5>
+                  ))}
+
+                <div className="card-body">
+                  <h5 className="card-title">{evento.fecha}</h5>
+                  <p className="card-text">{evento.detalle}</p>
+                  <a href="#" className="btn btn-danger">
+                    Eliminar evento
+                  </a>
+                </div>
+              </div>
+            ))}
+        </div>
+        <div className="col-sm-3">
+          <h3>Días anteriores</h3>
+          {eventos
+            .filter((evento) => !filtroFecha(evento.fecha))
+            .map((evento) => (
+              <div className="card">
+                {cats
+                  .filter((cat) => cat.id == evento.idCategoria)
+                  .map((cat) => (
+                    <h5 className="card-header">
+                      {cat.tipo}
+                      <img src={`${urlIMG}${cat.imagen}.png`} />
+                    </h5>
+                  ))}
+
+                <div className="card-body">
+                  <h5 className="card-title">{evento.fecha}</h5>
+                  <p className="card-text">{evento.detalle}</p>
+                  <a href="#" className="btn btn-danger">
+                    Eliminar evento
+                  </a>
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>
     </div>
   );
 };
