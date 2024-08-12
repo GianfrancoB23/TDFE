@@ -3,6 +3,7 @@ import {toast} from "react-toastify";
 import {useNavigate, Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {guardarCategorias} from "../../features/categoriasSlice";
+import {guardarEvento} from "../../features/eventosSlice";
 
 const AgregarEvento = () => {
   const navigate = useNavigate();
@@ -59,9 +60,9 @@ const AgregarEvento = () => {
         body: JSON.stringify(data),
       })
         .then((r) => r.json())
-        .then((data) => {
-          console.log("Respuesta:", data);
-          if (data.codigo == 200) {
+        .then((datos) => {
+          console.log("Respuesta:", datos);
+          if (datos.codigo == 200) {
             toast.success("Evento cargado con exito!", {
               position: "top-right",
               autoClose: 5000,
@@ -72,9 +73,10 @@ const AgregarEvento = () => {
               progress: undefined,
               theme: "light",
             });
+            dispatch(guardarEvento(data));
           } else {
-            console.log(data.codigo, data.mensaje);
-            toast.warn(`ERROR: ${data.mensaje}.`, {
+            console.log(datos.codigo, datos.mensaje);
+            toast.warn(`ERROR: ${datos.mensaje}.`, {
               position: "top-right",
               autoClose: 5000,
               hideProgressBar: false,

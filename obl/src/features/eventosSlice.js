@@ -1,8 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
+import {createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
   eventos: [],
-  ctdBiberones: 0
+  ctdBiberones: 0,
 };
 
 export const eventosSlice = createSlice({
@@ -13,16 +13,21 @@ export const eventosSlice = createSlice({
       //immer
       state.eventos = action.payload;
     },
-    incrementarBiberon: state => {
-      //immer 
+    incrementarBiberon: (state) => {
+      //immer
       state.ctdBiberones++;
     },
-    resetBiberon : state => {
-      //immer 
-      state.ctdBiberones=0;
+    resetBiberon: (state) => {
+      //immer
+      state.ctdBiberones = 0;
+    },
+    guardarEvento: (state, action) => {
+      //immer
+      state.eventos.push(action.payload);
     },
   },
 });
 
-export const { guardarEventos,incrementarBiberon,resetBiberon } = eventosSlice.actions;
+export const {guardarEventos, incrementarBiberon, resetBiberon, guardarEvento} =
+  eventosSlice.actions;
 export default eventosSlice.reducer;

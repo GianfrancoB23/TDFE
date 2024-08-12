@@ -4,6 +4,7 @@ import {useNavigate, Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {guardarCategorias} from "../../features/categoriasSlice";
 import {guardarEventos} from "../../features/eventosSlice";
+import Tarjeta from "./Listado/Tarjeta";
 
 const ListadoEventos = () => {
   const navigate = useNavigate();
@@ -88,6 +89,11 @@ const ListadoEventos = () => {
               </div>
             </div>
           ))}
+        {/* {eventos
+          .filter((evento) => filtroFecha(evento.fecha))
+          .map((evento) => (
+            <Tarjeta {{cats.filter((cat => cat.id == evento.idCategoria)).map(cat => cat.tipo)}, {cats.filter((cat => cat.id == evento.idCategoria)).map(cat => cat.idCategoria)}, evento.fecha, evento.detalle} />
+          ))} */}
       </div>
       <h3>Días anteriores</h3>
 
