@@ -1,15 +1,16 @@
 import React, { useId, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { guardarEventos, incrementarBiberon, resetBiberon } from "../../features/eventosSlice";
+import { guardarEventos, incrementarBiberon, resetBiberon, incrementarPanal, resetPanal, guardarUltimaFecha } from "../../features/eventosSlice";
 
-const InformeEventos = () => {
+const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
 
     const dispatch = useDispatch();
     const urlAPI = "https://babytracker.develotion.com/";
 
-    const eventos = useSelector((state) => state.eventos.eventos);
+    /* const eventos = useSelector((state) => state.eventos.eventos);
     const ctdBiberonesDia = useSelector((state) => state.eventos.ctdBiberones);
+    const ctdPanalesDia = useSelector((state) => state.eventos.ctdPanales); */
     let fechaMinima = new Date();
     let fechaMaxima = new Date();
     fechaMinima.setHours(0,0,0,0);
@@ -37,29 +38,51 @@ const InformeEventos = () => {
 
             });
     };
+    const actualizarPanales = () => {
+        console.log("Biberon actualizado");
+        setUltimaActualizacionPanales(new Date())
+
+        fetch(`${urlAPI}eventos.php?idUsuario=${localStorage.getItem("id")}`, {
+            headers: {
+                "Content-type": "application/json",
+                apikey: localStorage.getItem("apiKey"),
+                iduser: localStorage.getItem("id"),
+            },
+        })
+            .then((r) => r.json())
+            .then((datos) => {
+                dispatch(guardarEventos(datos.eventos));
+                console.log(datos.eventos);
+
+            });
+    };
 
     // Calcula los conteos de biberones cuando eventos cambia
     useEffect(() => {
         if (eventos.length === 0) return; // Si no hay eventos no ghace nada
 
         dispatch(resetBiberon());
+        dispatch(resetPanal());
 
         eventos.forEach(evento => {
             let fechaEvt = new Date(evento.fecha);
+
 
             if (evento.idCategoria === 35 && fechaEvt >= fechaMinima && fechaEvt <= fechaMaxima) {
                 console.log("Evento con categoría 35 encontrado:", evento.id, evento.fecha);
                 dispatch(incrementarBiberon())
             }
+
+            if (evento.idCategoria === 33 && fechaEvt >= fechaMinima && fechaEvt <= fechaMaxima) {
+                console.log("Evento con categoría 33 encontrado:", evento.id, evento.fecha);
+                dispatch(incrementarPanal())
+            }
         });
         
         console.log("Cantidad de biberones del día:", ctdBiberonesDia);
+        console.log("Cantidad de pañales del día:", ctdPanalesDia);
     }, [eventos, fechaMinima, fechaMaxima]);
 
-    const actualizarPanales = () => {
-        console.log("Panales actualizado");
-
-    }
 
     return (
         <div className="container my-2">
@@ -98,7 +121,7 @@ const InformeEventos = () => {
                     <div className="card-body">
                         <p className="card-text">
                             <strong>Total de Pañales del Día: </strong>
-                            <span id="totalPanales">0</span>
+                            <span id="totalPanales">{ctdPanalesDia}</span>
                         </p>
                         <p className="card-text">
                             <strong>Tiempo Transcurrido desde el Último Cambio: </strong>

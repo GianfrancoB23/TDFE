@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {guardarCategorias} from "../features/categoriasSlice";
 import {guardarEventos} from "../features/eventosSlice";
 import AgregarEvento from "./DashboardComp/AgregarEvento";
@@ -11,8 +11,18 @@ const Dashboard = () => {
   const urlAPI = "https://babytracker.develotion.com/";
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const eventos = useSelector((state) => state.eventos.eventos);
+  const ctdBiberonesDia = useSelector((state) => state.eventos.ctdBiberones);
+  const ctdPanalesDia = useSelector((state) => state.eventos.ctdPanales);
+  const lastUpdate = useSelector((state) => state.eventos.lastUpdate);  
+  const cats = useSelector((state) => state.categorias.categorias);
+  console.log(cats);
+  console.log(eventos);
+  
+  
+
   useEffect(() => {
-    if (localStorage.getItem("apiKey") == null) {
+    if (localStorage.getItem("apiKey") == null || localStorage.getItem("apiKey" == undefined)) {
       navigate("/Login");
     } else {
       fetch(`${urlAPI}categorias.php`, {
@@ -24,7 +34,23 @@ const Dashboard = () => {
       })
         .then((r) => r.json())
         .then((datos) => {
-          dispatch(guardarCategorias(datos.categorias));
+          if (datos.codigo == 200) {
+            console.log(datos);
+            
+            dispatch(guardarCategorias(datos.categorias));
+          } else {
+            console.log(datos.codigo, datos.mensaje);
+                        toast.warn(`ERROR: ${datos.mensaje}.`, {
+                            position: "top-right",
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "light",
+                        });
+          }
         });
       fetch(`${urlAPI}eventos.php?idUsuario=${localStorage.getItem("id")}`, {
         headers: {
@@ -42,8 +68,9 @@ const Dashboard = () => {
   return (
     <div>
       <h2>Dashboard</h2>
-      <AgregarEvento />;
-      <ListadoEvento />;
+      <InformeEventos eventos={eventos} ctdBiberonesDia={ctdBiberonesDia} ctdPanalesDia={ctdPanalesDia} />
+      <AgregarEvento cats={cats}/>;
+      <ListadoEvento eventos={eventos} cats={cats}/>;
     </div>
   );
 };

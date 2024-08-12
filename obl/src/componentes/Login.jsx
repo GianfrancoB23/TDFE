@@ -6,7 +6,7 @@ import {Link, useNavigate} from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
   useEffect(() => {
-    if (localStorage.getItem("apiKey") != null) {
+    if (localStorage.getItem("apiKey") != null || localStorage.getItem("apiKey") != undefined) {
       navigate("/Dashboard");
     }
   }, [navigate]);
@@ -46,12 +46,23 @@ const Login = () => {
         })
         .then((json) => {
           console.log(json);
-          if (json.apiKey) {
+          if (json.codigo == 200) {
             localStorage.setItem("apiKey", json.apiKey);
             localStorage.setItem("id", json.id);
             navigate("/Dashboard");
           } else {
-            toast.error(json.codigo + ": " + json.mensaje);
+            /* toast.error(json.codigo + ": " + json.mensaje); */
+            console.log(json.codigo, json.mensaje);
+            toast.warn(`ERROR: ${json.mensaje}.`, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: false,
+                draggable: true,
+                progress: undefined,
+                theme: "light",
+            });
           }
         });
     } else {

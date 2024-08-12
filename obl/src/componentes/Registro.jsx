@@ -30,7 +30,7 @@ const Registro = () => {
 
     //Obtengo los departamentos
     useEffect(() => {
-        if (localStorage.getItem("apiKey") != null) {
+        if (localStorage.getItem("apiKey") != null || localStorage.getItem("apiKey") != undefined) {
             navigate("/Dashboard");
         } else {
             fetch(`${urlAPI}departamentos.php`)

@@ -1,17 +1,17 @@
-import React, {useId, useEffect, useRef, useState} from "react";
-import {toast} from "react-toastify";
-import {useNavigate, Link} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {guardarCategorias} from "../../features/categoriasSlice";
-import {guardarEventos} from "../../features/eventosSlice";
+import React, { useId, useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
+import { useNavigate, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { guardarCategorias } from "../../features/categoriasSlice";
+import { guardarEventos } from "../../features/eventosSlice";
 import Tarjeta from "./Listado/Tarjeta";
 
-const ListadoEventos = () => {
+const ListadoEventos = ({ eventos, cats }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const urlAPI = "https://babytracker.develotion.com/";
   const urlIMG = "https://babytracker.develotion.com/imgs/";
-  useEffect(() => {
+  /* useEffect(() => {
     if (localStorage.getItem("apiKey") == null) {
       navigate("/Dashboard");
     } else {
@@ -38,10 +38,13 @@ const ListadoEventos = () => {
           dispatch(guardarEventos(datos.eventos));
         });
     }
-  }, []);
+  }, []); */
 
-  const cats = useSelector((state) => state.categorias.categorias);
-  const eventos = useSelector((state) => state.eventos.eventos);
+  /* const cats = useSelector((state) => state.categorias.categorias);
+  
+  const eventos = useSelector((state) => state.eventos.eventos); */
+  console.log(cats);
+  console.log(eventos);
 
   const filtroFecha = (date) => {
     let fecha = new Date(date);
@@ -52,13 +55,8 @@ const ListadoEventos = () => {
     let nYear = today.getFullYear();
     let nMonth = today.getMonth();
     let nDay = today.getDate();
-    console.log(`${fecha} || ${fYear} ${fMonth} ${fDay}`);
-    console.log(`${today} || ${nYear} ${nMonth} ${nDay}`);
-    console.log(fYear == nYear && fMonth == nMonth && fDay == nDay);
     return fYear == nYear && fMonth == nMonth && fDay == nDay;
   };
-  console.log(cats);
-  console.log(eventos);
 
   return (
     <div className="container justify-content-center align-items-center text-center ">
@@ -68,32 +66,14 @@ const ListadoEventos = () => {
         {eventos
           .filter((evento) => filtroFecha(evento.fecha))
           .map((evento) => (
-            <div className="col-sm-6 col-md-4 col-lg-3 col-xl-2 pb-4">
-              <div className="card">
-                {cats
-                  .filter((cat) => cat.id == evento.idCategoria)
-                  .map((cat) => (
-                    <h5 className="card-header">
-                      {cat.tipo}
-                      <img src={`${urlIMG}${cat.imagen}.png`} />
-                    </h5>
-                  ))}
-
-                <div className="card-body">
-                  <h5 className="card-title">{evento.fecha}</h5>
-                  <p className="card-text">{evento.detalle}</p>
-                  <a href="#" className="btn btn-danger">
-                    Eliminar evento
-                  </a>
-                </div>
-              </div>
-            </div>
+            <Tarjeta
+              categoria={cats
+                .filter((cat) => cat.id == evento.idCategoria)
+                .map((cat) => cat)}
+              fecha={evento.fecha}
+              detalle={evento.detalle}
+            />
           ))}
-        {/* {eventos
-          .filter((evento) => filtroFecha(evento.fecha))
-          .map((evento) => (
-            <Tarjeta {{cats.filter((cat => cat.id == evento.idCategoria)).map(cat => cat.tipo)}, {cats.filter((cat => cat.id == evento.idCategoria)).map(cat => cat.idCategoria)}, evento.fecha, evento.detalle} />
-          ))} */}
       </div>
       <h3>Días anteriores</h3>
 
@@ -101,26 +81,13 @@ const ListadoEventos = () => {
         {eventos
           .filter((evento) => !filtroFecha(evento.fecha))
           .map((evento) => (
-            <div className="col-sm-6 col-md-4 col-lg-3 col-xl-2 pb-4">
-              <div className="card">
-                {cats
-                  .filter((cat) => cat.id == evento.idCategoria)
-                  .map((cat) => (
-                    <h5 className="card-header">
-                      {cat.tipo}
-                      <img src={`${urlIMG}${cat.imagen}.png`} />
-                    </h5>
-                  ))}
-
-                <div className="card-body">
-                  <h5 className="card-title">{evento.fecha}</h5>
-                  <p className="card-text">{evento.detalle}</p>
-                  <a href="#" className="btn btn-danger">
-                    Eliminar evento
-                  </a>
-                </div>
-              </div>
-            </div>
+            <Tarjeta
+              categoria={cats
+                .filter((cat) => cat.id == evento.idCategoria)
+                .map((cat) => cat)}
+              fecha={evento.fecha}
+              detalle={evento.detalle}
+            />
           ))}
       </div>
     </div>

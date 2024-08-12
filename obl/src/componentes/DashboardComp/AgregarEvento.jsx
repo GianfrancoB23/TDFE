@@ -5,12 +5,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {guardarCategorias} from "../../features/categoriasSlice";
 import {guardarEvento} from "../../features/eventosSlice";
 
-const AgregarEvento = () => {
+const AgregarEvento = ({cats}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const urlAPI = "https://babytracker.develotion.com/";
-  useEffect(() => {
-    if (localStorage.getItem("apiKey") == null) {
+  /* useEffect(() => {
+    if (localStorage.getItem("apiKey") == null || localStorage.getItem("apiKey") == undefined) {
       navigate("/Dashboard");
     } else {
       fetch(`${urlAPI}categorias.php`, {
@@ -25,8 +25,8 @@ const AgregarEvento = () => {
           dispatch(guardarCategorias(datos.categorias));
         });
     }
-  }, []);
-  const cats = useSelector((state) => state.categorias.categorias);
+  }, []); */
+  //const cats = useSelector((state) => state.categorias.categorias);
   const [catSel, setCatSel] = useState("");
   const [timeSel, setTimeSel] = useState("");
   const [detSel, setDetSel] = useState("");

@@ -3,6 +3,7 @@ import {createSlice} from "@reduxjs/toolkit";
 const initialState = {
   eventos: [],
   ctdBiberones: 0,
+  ctdPanales: 0,
 };
 
 export const eventosSlice = createSlice({
@@ -21,13 +22,24 @@ export const eventosSlice = createSlice({
       //immer
       state.ctdBiberones = 0;
     },
+    incrementarPanal: (state) => {
+      //immer
+      state.ctdPanales++;
+    },
+    resetPanal: (state) => {
+      //immer
+      state.ctdPanales = 0;
+    },
     guardarEvento: (state, action) => {
       //immer
       state.eventos.push(action.payload);
     },
+    guardarUltimaFecha: (state, action) => {
+      state.lastUpd = action.payload;
+    }
   },
 });
 
-export const {guardarEventos, incrementarBiberon, resetBiberon, guardarEvento} =
+export const {guardarEventos, incrementarBiberon, resetBiberon, guardarEvento, incrementarPanal, resetPanal, guardarUltimaFecha} =
   eventosSlice.actions;
 export default eventosSlice.reducer;
