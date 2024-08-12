@@ -3,6 +3,9 @@ import {useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {guardarCategorias} from "../features/categoriasSlice";
 import {guardarEventos} from "../features/eventosSlice";
+import AgregarEvento from "./DashboardComp/AgregarEvento";
+import ListadoEvento from "./DashboardComp/ListadoEvento";
+import InformeEventos from "./DashboardComp/InformeEventos";
 
 const Dashboard = () => {
   const urlAPI = "https://babytracker.develotion.com/";
@@ -36,7 +39,13 @@ const Dashboard = () => {
         });
     }
   }, []);
-  return <div>Dashboard</div>;
+  return (
+    <div>
+      <h2>Dashboard</h2>
+      <AgregarEvento />;
+      <ListadoEvento />;
+    </div>
+  );
 };
 
 export default Dashboard;

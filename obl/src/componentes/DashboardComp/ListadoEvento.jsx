@@ -62,12 +62,12 @@ const ListadoEventos = () => {
   return (
     <div className="container justify-content-center align-items-center text-center ">
       <h2>Listado de eventos</h2>
+      <h3>Hoy</h3>
       <div className="row justify-content-center">
-        <div className="col-sm-3">
-          <h3>Hoy</h3>
-          {eventos
-            .filter((evento) => filtroFecha(evento.fecha))
-            .map((evento) => (
+        {eventos
+          .filter((evento) => filtroFecha(evento.fecha))
+          .map((evento) => (
+            <div className="col-sm-6 col-md-4 col-lg-3 col-xl-2 pb-4">
               <div className="card">
                 {cats
                   .filter((cat) => cat.id == evento.idCategoria)
@@ -86,13 +86,16 @@ const ListadoEventos = () => {
                   </a>
                 </div>
               </div>
-            ))}
-        </div>
-        <div className="col-sm-3">
-          <h3>Días anteriores</h3>
-          {eventos
-            .filter((evento) => !filtroFecha(evento.fecha))
-            .map((evento) => (
+            </div>
+          ))}
+      </div>
+      <h3>Días anteriores</h3>
+
+      <div className="row justify-content-center">
+        {eventos
+          .filter((evento) => !filtroFecha(evento.fecha))
+          .map((evento) => (
+            <div className="col-sm-6 col-md-4 col-lg-3 col-xl-2 pb-4">
               <div className="card">
                 {cats
                   .filter((cat) => cat.id == evento.idCategoria)
@@ -111,8 +114,8 @@ const ListadoEventos = () => {
                   </a>
                 </div>
               </div>
-            ))}
-        </div>
+            </div>
+          ))}
       </div>
     </div>
   );
