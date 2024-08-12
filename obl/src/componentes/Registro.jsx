@@ -115,7 +115,7 @@ const Registro = () => {
                     }
                 });
         } else {
-            toast.error("Debe completar todos los campos", {
+            toast.error("ERROR: Debe completar todos los campos", {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,

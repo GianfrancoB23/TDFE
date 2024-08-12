@@ -1,8 +1,8 @@
-import React, {useId, useEffect, useRef, useState} from "react";
-import {toast} from "react-toastify";
-import {useNavigate, Link} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {guardarCategorias} from "../../features/categoriasSlice";
+import React, { useId, useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
+import { useNavigate, Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { guardarCategorias } from "../../features/categoriasSlice";
 import departamentosSlice from "../../features/departamentosSlice";
 
 const AgregarEvento = () => {
@@ -37,13 +37,111 @@ const AgregarEvento = () => {
   const idFecHora = useId();
   const idDetalles = useId();
 
-  const loadCat = (e) => {};
-
   const cargarEvento = () => {
-    const valorFecHora = fecHoraRef.current.value;
-    console.log("Categoria: ", catSel, "Fecha y Hora: ", timeSel, "Detalles: ", detSel);
 
+    if(timeSel.length==0){
+      setTimeSel(new Date());
+    }
+
+    if (catSel.length != 0) {
+      // Cargo el evento
+
+      const data = {
+        idCategoria: catSel,
+        idUsuario: localStorage.getItem("id"),
+        detalle: detSel,
+        fecha: formatearFecha(timeSel),
+        
+      };
+      
+      fetch(`${urlAPI}/eventos.php`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": localStorage.getItem("apiKey"),
+          "iduser": localStorage.getItem("id")
+        },
+        body: JSON.stringify(data),
+      })
+        .then((r) => r.json())
+        .then((data) => {
+          console.log("Respuesta:", data);
+          if (data.codigo == 200) {
+            toast.success('Evento cargado con exito!', {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          } else {
+            console.log(data.codigo, data.mensaje);
+            toast.warn(`ERROR: ${data.mensaje}.`, {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          }
+        });
+
+    }else{
+      toast.warn('ERROR: Seleccione una categoria.', {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
   }
+
+  const seleccionarHora = (e) => {
+    const inputFechaHora = e.target.value;
+    const nuevaFecha = new Date(inputFechaHora);
+    const fechaActual = new Date();
+
+    // Comparar solo la fecha sin hora
+    fechaActual.setHours(0, 0, 0, 0);
+
+    if (nuevaFecha > fechaActual) {
+      toast.error(`ERROR: La fecha no puede ser superior a la actual ${formatearFecha(fechaActual)}`, {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      setTimeSel("")
+    } else {
+      setTimeSel(inputFechaHora);
+    }
+  };
+
+  const formatearFecha = (fechSinFormatear) => {
+    const date = new Date(fechSinFormatear);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  };
 
   return (
     <div className="container">
@@ -58,7 +156,7 @@ const AgregarEvento = () => {
           onChange={(e) => setCatSel(e.target.value)}
           defaultValue="">
           <option value="" disabled hidden>
-              Seleccion
+            Seleccion
           </option>
           {cats.map((cat) => (
             <option key={cat.id} value={cat.id}>
@@ -75,7 +173,7 @@ const AgregarEvento = () => {
           id={idFecHora}
           name={idFecHora}
           required=""
-          onChange={(e) => setTimeSel(e.target.value)}
+          onChange={seleccionarHora}
         />
       </div>
       <div className="form-group mt-2">
@@ -91,9 +189,9 @@ const AgregarEvento = () => {
         />
       </div>
       <button
-        type="submit"
+        type="button"
         className="btn btn-primary mt-2"
-        disabled={timeSel == "" || timeSel > Date.now()}
+        disabled={timeSel == "" || new Date(timeSel) > Date.now()}
         onClick={cargarEvento}>
         CARGAR
       </button>
