@@ -25,7 +25,6 @@ function App() {
             <Route path="/Login" element={<Login />} />
             <Route path="/Registro" element={<Registro />} />
             <Route path="/Dashboard" element={<Dashboard />} />
-            <Route path="/TiempoRestante" element={<TiempoRestante />} />
             <Route path="*" element={<NoEncontrado />} />
           </Route>
         </Routes>
