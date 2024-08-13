@@ -114,7 +114,7 @@ const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
       <div className="d-flex col-12 justify-content-center">
         <div id="biberonesCard" className="card mb-3 col-6 m-1">
           <div className="card-header">
-            <h3 className="card-title">Biberones</h3>
+            <h3 className="card-title text-center">Biberones</h3>
           </div>
           <div className="card-body">
             <p className="card-text">
@@ -138,18 +138,10 @@ const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
               </span>
             </p>
           </div>
-          {/* <div className="card-footer">
-            <button
-              id="biberonesBtn"
-              className="btn btn-primary w-100"
-              onClick={actualizarBiberon}>
-              ACTUALIZAR
-            </button>
-          </div> */}
         </div>
         <div id="panalesCard" className="card mb-3 col-6 m-1">
           <div className="card-header">
-            <h3 className="card-title">Pañales</h3>
+            <h3 className="card-title text-center">Pañales</h3>
           </div>
           <div className="card-body">
             <p className="card-text">

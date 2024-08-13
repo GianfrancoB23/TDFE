@@ -129,7 +129,7 @@ const AgregarEvento = ({cats}) => {
 
   return (
     <div className="container">
-      <h2>FORMULARIO DE EVENTO</h2>
+      <h2 className="text-center">FORMULARIO DE EVENTO</h2>
       <div className="form-group mt-2">
         <label htmlFor={idSlcCategoria}>Categoría</label>
         <select
@@ -174,7 +174,7 @@ const AgregarEvento = ({cats}) => {
       </div>
       <button
         type="button"
-        className="btn btn-primary mt-2"
+        className="btn btn-primary mt-2 w-100"
         disabled={
           timeSel == "" ||
           new Date(timeSel) > Date.now() ||

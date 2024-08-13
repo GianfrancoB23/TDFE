@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import "../../src/estilos.css"
 
 const Contenedor = () => {
-  
+
   const [apiKey, setApiKey] = useState(localStorage.getItem("apiKey"));
 
   const logout = () => {
@@ -21,6 +24,13 @@ const Contenedor = () => {
       <header className="row">
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <Link className="navbar-brand" to="/Dashboard">
+            <img
+              src="../html/img/logo32.png"
+              width={30}
+              height={30}
+              className="d-inline-block align-top mx-2"
+              alt=""
+            />
             BABY TRACKER
           </Link>
           <button
@@ -35,7 +45,7 @@ const Contenedor = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
-            {!apiKey && (
+              {!apiKey && (
                 <>
                   <li className="nav-item active">
                     <NavLink className="nav-link" to="/Login">
@@ -54,6 +64,7 @@ const Contenedor = () => {
                   <li className="nav-item">
                     <Link className="nav-link" to="/Login" onClick={logout}>
                       LOGOUT
+                      <FontAwesomeIcon className="m-2 my-0" icon={faArrowRightFromBracket} />
                     </Link>
                   </li>
                 </>
