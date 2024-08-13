@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { guardarEventos, incrementarBiberon, resetBiberon, incrementarPanal, resetPanal, guardarUltimaFecha } from "../../features/eventosSlice";
 
-const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
+const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
 
     const dispatch = useDispatch();
     const urlAPI = "https://babytracker.develotion.com/";
@@ -13,11 +13,16 @@ const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
     const ctdPanalesDia = useSelector((state) => state.eventos.ctdPanales); */
     let fechaMinima = new Date();
     let fechaMaxima = new Date();
-    fechaMinima.setHours(0,0,0,0);
-    fechaMaxima.setHours(23,59,59,59);
+    fechaMinima.setHours(0, 0, 0, 0);
+    fechaMaxima.setHours(23, 59, 59, 59);
+    let fechaBase = new Date("2023-01-01")
+    let fechaUltimoBiberon = fechaBase;
+    let fechaUltimoPanal = fechaBase;
 
     const [ultimaActualizacionBiberon, setUltimaActualizacionBiberon] = useState(null);
     const [ultimaActualizacionPanales, setUltimaActualizacionPanales] = useState(null);
+    const [tiempoTranscurridoBiberon, settiempoTranscurridoBiberon] = useState(null);
+    const [tiempoTranscurridoPanal, settiempoTranscurridoPanal] = useState(null);
 
     // Función para actualizar eventos
     const actualizarBiberon = () => {
@@ -71,18 +76,41 @@ const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
             if (evento.idCategoria === 35 && fechaEvt >= fechaMinima && fechaEvt <= fechaMaxima) {
                 console.log("Evento con categoría 35 encontrado:", evento.id, evento.fecha);
                 dispatch(incrementarBiberon())
+                if (fechaEvt > fechaUltimoBiberon) {
+                    fechaUltimoBiberon = fechaEvt;
+                }
             }
 
             if (evento.idCategoria === 33 && fechaEvt >= fechaMinima && fechaEvt <= fechaMaxima) {
                 console.log("Evento con categoría 33 encontrado:", evento.id, evento.fecha);
                 dispatch(incrementarPanal())
+                if (fechaEvt > fechaUltimoPanal) {
+                    fechaUltimoPanal = fechaEvt;
+                }
             }
         });
-        
+        console.log("Actualizado: ", fechaUltimoBiberon);
+        settiempoTranscurridoBiberon(diferenciaTiempo(fechaUltimoBiberon));
+        settiempoTranscurridoPanal(diferenciaTiempo(fechaUltimoPanal));
         console.log("Cantidad de biberones del día:", ctdBiberonesDia);
-        console.log("Cantidad de pañales del día:", ctdPanalesDia);
     }, [eventos, fechaMinima, fechaMaxima]);
 
+
+    const diferenciaTiempo = (ultimaFecha) => {
+        const diferenciaMs = new Date() - ultimaFecha;
+
+        const segundosTotales = Math.floor(diferenciaMs / 1000);
+        const minutosTotales = Math.floor(segundosTotales / 60);
+        const horasTotales = Math.floor(minutosTotales / 60);
+        const diasTotales = Math.floor(horasTotales / 24);
+
+        const segundos = segundosTotales % 60;
+        const minutos = minutosTotales % 60;
+        const horas = horasTotales % 24;
+        const dias = diasTotales;
+
+        return(dias + ":" + horas + ":" +minutos + ":" + segundos);
+    }
 
     return (
         <div className="container my-2">
@@ -99,7 +127,7 @@ const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
                         </p>
                         <p className="card-text">
                             <strong>Tiempo Transcurrido desde el Último Biberón: </strong>
-                            <span id="tiempoBiberon">00:00:00</span>
+                            <span id="tiempoBiberon">{tiempoTranscurridoBiberon ? tiempoTranscurridoBiberon : 'Nunca'}</span>
                         </p>
                         <p className="card-text">
                             <strong>Ultima Actualizacion: </strong>
@@ -125,7 +153,7 @@ const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
                         </p>
                         <p className="card-text">
                             <strong>Tiempo Transcurrido desde el Último Cambio: </strong>
-                            <span id="tiempoPanales">00:00:00</span>
+                            <span id="tiempoPanales">{tiempoTranscurridoPanal ? tiempoTranscurridoPanal : 'Nunca'}</span>
                         </p>
                         <p className="card-text">
                             <strong>Ultima Actualizacion: </strong>
