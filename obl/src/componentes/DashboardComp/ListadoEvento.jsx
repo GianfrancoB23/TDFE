@@ -1,22 +1,7 @@
-import React, { useId, useEffect, useRef, useState } from "react";
-import { toast } from "react-toastify";
-import { useNavigate, Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { guardarCategorias } from "../../features/categoriasSlice";
-import { guardarEventos } from "../../features/eventosSlice";
+import React, {useId, useEffect, useRef, useState} from "react";
 import Tarjeta from "./Listado/Tarjeta";
 
-const ListadoEventos = ({ eventos, cats }) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const urlAPI = "https://babytracker.develotion.com/";
-  const urlIMG = "https://babytracker.develotion.com/imgs/";
-  /* const cats = useSelector((state) => state.categorias.categorias); 
-  
-  const eventos = useSelector((state) => state.eventos.eventos); */
-  console.log(cats);
-  console.log(eventos);
-
+const ListadoEventos = ({eventos, cats}) => {
   const filtroFecha = (date) => {
     let fecha = new Date(date);
     let today = new Date();

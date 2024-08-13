@@ -9,24 +9,6 @@ const AgregarEvento = ({cats}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const urlAPI = "https://babytracker.develotion.com/";
-  /* useEffect(() => {
-    if (localStorage.getItem("apiKey") == null || localStorage.getItem("apiKey") == undefined) {
-      navigate("/Dashboard");
-    } else {
-      fetch(`${urlAPI}categorias.php`, {
-        headers: {
-          "Content-type": "application/json",
-          apikey: localStorage.getItem("apiKey"),
-          iduser: localStorage.getItem("id"),
-        },
-      })
-        .then((r) => r.json())
-        .then((datos) => {
-          dispatch(guardarCategorias(datos.categorias));
-        });
-    }
-  }, []); */
-  //const cats = useSelector((state) => state.categorias.categorias);
   const [catSel, setCatSel] = useState("");
   const [timeSel, setTimeSel] = useState("");
   const [detSel, setDetSel] = useState("");
@@ -61,7 +43,7 @@ const AgregarEvento = ({cats}) => {
       })
         .then((r) => r.json())
         .then((datos) => {
-          console.log("Respuesta:", datos);
+          //console.log("Respuesta:", datos);
           if (datos.codigo == 200) {
             toast.success("Evento cargado con exito!", {
               position: "top-right",
@@ -73,12 +55,12 @@ const AgregarEvento = ({cats}) => {
               progress: undefined,
               theme: "light",
             });
-            data.id=datos.idEvento;
-            console.log(data);
-            
+            data.id = datos.idEvento;
+            //console.log(data);
+
             dispatch(guardarEvento(data));
           } else {
-            console.log(datos.codigo, datos.mensaje);
+            //console.log(datos.codigo, datos.mensaje);
             toast.warn(`ERROR: ${datos.mensaje}.`, {
               position: "top-right",
               autoClose: 5000,
@@ -193,7 +175,12 @@ const AgregarEvento = ({cats}) => {
       <button
         type="button"
         className="btn btn-primary mt-2"
-        disabled={timeSel == "" || new Date(timeSel) > Date.now() || catSel == "" || catSel == null}
+        disabled={
+          timeSel == "" ||
+          new Date(timeSel) > Date.now() ||
+          catSel == "" ||
+          catSel == null
+        }
         onClick={cargarEvento}>
         CARGAR
       </button>

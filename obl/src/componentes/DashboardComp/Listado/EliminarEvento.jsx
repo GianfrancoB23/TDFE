@@ -1,16 +1,13 @@
-import { toast } from "react-toastify";
-import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import { eliminarEvento } from "../../../features/eventosSlice";
+import {toast} from "react-toastify";
+import {useDispatch, useSelector} from "react-redux";
+import {useState} from "react";
+import {eliminarEvento} from "../../../features/eventosSlice";
 const EliminarEvento = (idEvento) => {
   const urlAPI = "https://babytracker.develotion.com/";
   const dispatch = useDispatch();
-  idEvento = idEvento.idEvento;  
+  idEvento = idEvento.idEvento;
 
   const eliminar = () => {
-
-
-
     if (confirm("¿Confirma que desea eliminar este evento del registro?")) {
       console.log(
         `Eliminando evento ID ${idEvento} para usuario de ID ${localStorage.getItem(
@@ -27,7 +24,7 @@ const EliminarEvento = (idEvento) => {
       })
         .then((r) => r.json())
         .then((data) => {
-          console.log(data);
+          /* console.log(data); */
 
           if (data.codigo == "200") {
             toast.success("Se ha eliminado el evento.", {
@@ -40,9 +37,9 @@ const EliminarEvento = (idEvento) => {
               progress: undefined,
               theme: "light",
             });
-            dispatch(eliminarEvento(idEvento))
+            dispatch(eliminarEvento(idEvento));
           } else {
-            console.log(data.codigo, data.mensaje);
+            /* console.log(data.codigo, data.mensaje); */
             toast.warn(`ERROR: ${data.mensaje}.`, {
               position: "top-right",
               autoClose: 5000,

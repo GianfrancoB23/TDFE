@@ -6,7 +6,10 @@ import {Link, useNavigate} from "react-router-dom";
 const Login = () => {
   const navigate = useNavigate();
   useEffect(() => {
-    if (localStorage.getItem("apiKey") != null || localStorage.getItem("apiKey") != undefined) {
+    if (
+      localStorage.getItem("apiKey") != null ||
+      localStorage.getItem("apiKey") != undefined
+    ) {
       navigate("/Dashboard");
     }
   }, [navigate]);
@@ -30,7 +33,7 @@ const Login = () => {
     const pass = passCampoLogin.current.value; */
     const user = userCampoLogin;
     const pass = passCampoLogin;
-    console.log(user, pass);
+    /* console.log(user, pass); */
     if (user && pass) {
       let objUser = {
         usuario: user,
@@ -45,23 +48,23 @@ const Login = () => {
           return response.json();
         })
         .then((json) => {
-          console.log(json);
+          /* console.log(json); */
           if (json.codigo == 200) {
             localStorage.setItem("apiKey", json.apiKey);
             localStorage.setItem("id", json.id);
             navigate("/Dashboard");
           } else {
             /* toast.error(json.codigo + ": " + json.mensaje); */
-            console.log(json.codigo, json.mensaje);
+            /* console.log(json.codigo, json.mensaje); */
             toast.warn(`ERROR: ${json.mensaje}.`, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: false,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
             });
           }
         });
@@ -83,7 +86,7 @@ const Login = () => {
       <br />
       <label htmlFor={idPassLogin}>Pass: </label>
       <input
-        type="text"
+        type="password"
         id={idPassLogin}
         //ref={passCampoLogin}
         onChange={(e) => setPassCampoLogin(e.target.value)}

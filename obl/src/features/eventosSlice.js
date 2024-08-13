@@ -11,12 +11,16 @@ export const eventosSlice = createSlice({
   initialState,
   reducers: {
     guardarEventos: (state, action) => {
-      //immer      
+      //immer
       state.eventos = action.payload;
+    },
+    guardarEvento: (state, action) => {
+      //immer
+      state.eventos.push(action.payload);
     },
     incrementarBiberon: (state) => {
       //immer
-      state.ctdBiberones++;
+      ++state.ctdBiberones;
     },
     resetBiberon: (state) => {
       //immer
@@ -24,25 +28,31 @@ export const eventosSlice = createSlice({
     },
     incrementarPanal: (state) => {
       //immer
-      state.ctdPanales++;
+      ++state.ctdPanales;
     },
     resetPanal: (state) => {
       //immer
       state.ctdPanales = 0;
     },
-    guardarEvento: (state, action) => {
-      //immer
-      state.eventos.push(action.payload);
-    },
     guardarUltimaFecha: (state, action) => {
       state.lastUpd = action.payload;
     },
     eliminarEvento: (state, action) => {
-      state.eventos = state.eventos.filter(item => item.id !== action.payload)
-    }
+      state.eventos = state.eventos.filter(
+        (item) => item.id !== action.payload
+      );
+    },
   },
 });
 
-export const {guardarEventos, incrementarBiberon, resetBiberon, guardarEvento, incrementarPanal, resetPanal, guardarUltimaFecha, eliminarEvento} =
-  eventosSlice.actions;
+export const {
+  guardarEventos,
+  incrementarBiberon,
+  resetBiberon,
+  guardarEvento,
+  incrementarPanal,
+  resetPanal,
+  guardarUltimaFecha,
+  eliminarEvento,
+} = eventosSlice.actions;
 export default eventosSlice.reducer;
