@@ -72,7 +72,7 @@ const Dashboard = () => {
       <InformeEventos eventos={eventos} ctdBiberonesDia={ctdBiberonesDia} ctdPanalesDia={ctdPanalesDia} />
       <AgregarEvento cats={cats}/>
       <ListadoEvento eventos={eventos} cats={cats}/>
-      <GraficosEventos eventos={eventos} cats={cats} titleGraph="Cantidades por categoria" detalle="Eventos" />
+      <GraficosEventos eventos={eventos} cats={cats}/>
     </div>
   );
 };

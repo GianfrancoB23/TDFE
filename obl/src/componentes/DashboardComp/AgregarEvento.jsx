@@ -73,6 +73,9 @@ const AgregarEvento = ({cats}) => {
               progress: undefined,
               theme: "light",
             });
+            data.id=datos.idEvento;
+            console.log(data);
+            
             dispatch(guardarEvento(data));
           } else {
             console.log(datos.codigo, datos.mensaje);
@@ -190,7 +193,7 @@ const AgregarEvento = ({cats}) => {
       <button
         type="button"
         className="btn btn-primary mt-2"
-        disabled={timeSel == "" || new Date(timeSel) > Date.now()}
+        disabled={timeSel == "" || new Date(timeSel) > Date.now() || catSel == "" || catSel == null}
         onClick={cargarEvento}>
         CARGAR
       </button>

@@ -40,6 +40,7 @@ const EliminarEvento = (idEvento) => {
               progress: undefined,
               theme: "light",
             });
+            dispatch(eliminarEvento(idEvento))
           } else {
             console.log(data.codigo, data.mensaje);
             toast.warn(`ERROR: ${data.mensaje}.`, {
