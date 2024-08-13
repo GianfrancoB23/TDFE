@@ -79,19 +79,27 @@ const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
                 if (fechaEvt > fechaUltimoBiberon) {
                     fechaUltimoBiberon = fechaEvt;
                 }
+                settiempoTranscurridoBiberon(diferenciaTiempo(fechaUltimoBiberon));
             }
-
+            if(ctdBiberonesDia==0){
+                settiempoTranscurridoBiberon(0 + ":" + 0 + ":" + 0 + ":" + 0)
+            }
+            
             if (evento.idCategoria === 33 && fechaEvt >= fechaMinima && fechaEvt <= fechaMaxima) {
                 console.log("Evento con categoría 33 encontrado:", evento.id, evento.fecha);
                 dispatch(incrementarPanal())
                 if (fechaEvt > fechaUltimoPanal) {
                     fechaUltimoPanal = fechaEvt;
                 }
+                settiempoTranscurridoPanal(diferenciaTiempo(fechaUltimoPanal));
+            }
+            if(ctdPanalesDia==0){
+                settiempoTranscurridoPanal(0 + ":" + 0 + ":" + 0 + ":" + 0)
             }
         });
         console.log("Actualizado: ", fechaUltimoBiberon);
-        settiempoTranscurridoBiberon(diferenciaTiempo(fechaUltimoBiberon));
-        settiempoTranscurridoPanal(diferenciaTiempo(fechaUltimoPanal));
+        
+        
         console.log("Cantidad de biberones del día:", ctdBiberonesDia);
     }, [eventos, fechaMinima, fechaMaxima]);
 
