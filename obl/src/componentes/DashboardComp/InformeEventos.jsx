@@ -12,7 +12,6 @@ import {
 
 const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
   const dispatch = useDispatch();
-  const urlAPI = "https://babytracker.develotion.com/";
 
   let fechaMinima = new Date();
   let fechaMaxima = new Date();
@@ -32,8 +31,7 @@ const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
 
   // Calcula los conteos de biberones cuando eventos cambia
   useEffect(() => {
-    /* console.log("USANDO EFECTO");
-    console.log(eventos); */
+
     if (eventos.length === 0) return; // Si no hay eventos no ghace nada
 
     dispatch(resetBiberon());
@@ -41,20 +39,12 @@ const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
 
     eventos.forEach((evento) => {
       let fechaEvt = new Date(evento.fecha);
-      /* console.log(evento);
-      console.log(evento.fecha);
- */
+
       if (
         evento.idCategoria == 35 &&
         fechaEvt >= fechaMinima &&
         fechaEvt <= fechaMaxima
       ) {
-        /* console.log("TRUE 35"); */
-        /* console.log(
-          "Evento con categoría 35 encontrado:",
-          evento.id,
-          evento.fecha
-        ); */
         dispatch(incrementarBiberon());
         if (fechaEvt > fechaUltimoBiberon) {
           fechaUltimoBiberon = fechaEvt;
@@ -70,12 +60,6 @@ const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
         fechaEvt >= fechaMinima &&
         fechaEvt <= fechaMaxima
       ) {
-        /* console.log("TRUE 33"); */
-        /* console.log(
-          "Evento con categoría 33 encontrado:",
-          evento.id,
-          evento.fecha
-        ); */
         dispatch(incrementarPanal());
         if (fechaEvt > fechaUltimoPanal) {
           fechaUltimoPanal = fechaEvt;
@@ -86,11 +70,7 @@ const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
         settiempoTranscurridoPanal(0 + ":" + 0 + ":" + 0 + ":" + 0);
       }
     });
-    /* console.log("Actualizado: ", fechaUltimoBiberon); */
-
-    /* console.log("Cantidad de biberones del día:", ctdBiberonesDia); */
   }, [eventos, fechaMinima, fechaMaxima]);
-  /* console.log(eventos); */
 
   const diferenciaTiempo = (ultimaFecha) => {
     const diferenciaMs = new Date() - ultimaFecha;

@@ -14,6 +14,7 @@ import Dashboard from "./componentes/Dashboard";
 import AgregarEvento from "./componentes/DashboardComp/AgregarEvento";
 import ListadoEvento from "./componentes/DashboardComp/ListadoEvento";
 import InformeEventos from "./componentes/DashboardComp/InformeEventos";
+import TiempoRestante from "./componentes/DashboardComp/TiempoRestante";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/Login" element={<Login />} />
             <Route path="/Registro" element={<Registro />} />
             <Route path="/Dashboard" element={<Dashboard />} />
+            <Route path="/TiempoRestante" element={<TiempoRestante />} />
             <Route path="*" element={<NoEncontrado />} />
           </Route>
         </Routes>
