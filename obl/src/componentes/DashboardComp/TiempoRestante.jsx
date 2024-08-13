@@ -1,13 +1,7 @@
-import React, { useId, useEffect, useRef, useState } from "react";
-import { toast } from "react-toastify";
+import React, {useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
     guardarEventos,
-    incrementarBiberon,
-    resetBiberon,
-    incrementarPanal,
-    resetPanal,
-    guardarUltimaFecha,
 } from "../../features/eventosSlice";
 
 const TiempoRestante = () => {
