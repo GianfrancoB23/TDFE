@@ -7,6 +7,7 @@ import AgregarEvento from "./DashboardComp/AgregarEvento";
 import ListadoEvento from "./DashboardComp/ListadoEvento";
 import InformeEventos from "./DashboardComp/InformeEventos";
 import GraficosEventos from "./DashboardComp/GraficosEventos";
+import TiempoRestante from "./DashboardComp/TiempoRestante";
 
 const Dashboard = () => {
   const urlAPI = "https://babytracker.develotion.com/";
@@ -77,6 +78,7 @@ const Dashboard = () => {
       <AgregarEvento cats={cats} />
       <ListadoEvento eventos={eventos} cats={cats} />
       <GraficosEventos eventos={eventos} cats={cats} />
+      <TiempoRestante eventos={eventos}/>
     </div>
   );
 };

@@ -4,29 +4,10 @@ import {
     guardarEventos,
 } from "../../features/eventosSlice";
 
-const TiempoRestante = () => {
+const TiempoRestante = ({eventos}) => {
     const dispatch = useDispatch();
 
     const [tiempoProximoBiberon, setTiempoProximoBiberon] = useState("");
-
-    //Sacar cuando pasamos a dash
-    const eventos = useSelector((state) => state.eventos.eventos);
-    const urlAPI = "https://babytracker.develotion.com/";
-    useEffect(() => {
-        fetch(`${urlAPI}eventos.php?idUsuario=${localStorage.getItem("id")}`, {
-            headers: {
-                "Content-type": "application/json",
-                apikey: localStorage.getItem("apiKey"),
-                iduser: localStorage.getItem("id"),
-            },
-        })
-            .then((r) => r.json())
-            .then((datos) => {
-                dispatch(guardarEventos(datos.eventos));
-                console.log(datos);
-
-            });
-    }, [])
 
     useEffect(() => {
 
@@ -66,6 +47,10 @@ const TiempoRestante = () => {
         setTiempoProximoBiberon(calcularTiempoRestante());
 
         /* GENERADO POR CHATGPT  PARA ACTUALIZAR CADA SEGUNDO*/
+
+        //setInterval es una funcion que le pasas 2 parametros
+        //primero lo que queres que ejecute
+        //segundo el intervalo de tiempo en milisegundos cada cuanto queres que se ejecute
         setInterval(() => {
             setTiempoProximoBiberon(calcularTiempoRestante());
         }, 1000); // Actualizar cada segundo
@@ -73,7 +58,7 @@ const TiempoRestante = () => {
     }, [eventos]);
 
     return (
-        <div className="container">
+        <div className="container mt-4">
             <div className="card text-center">
                 <div className="card-header">TIEMPO RESTANTE PARA EL PRÓXIMO BIBERÓN:</div>
                 <div className="card-body">
