@@ -8,12 +8,10 @@ const Contenedor = () => {
   const urlAPI = "https://babytracker.develotion.com/";
   const navigate = useNavigate();
   const [apiKey, setApiKey] = useState(null);
-  console.log(apiKey);
   const storedApiKey = localStorage.getItem("apiKey");
   if (storedApiKey != apiKey) {
     setApiKey(storedApiKey);
   }
-  console.log(apiKey);
 
   const logout = () => {
     localStorage.clear();
@@ -22,7 +20,6 @@ const Contenedor = () => {
   useEffect(() => {
     navigate("/Login");
 
-    console.log(apiKey);
     if (
       localStorage.getItem("apiKey") == null ||
       localStorage.getItem("apiKey" == undefined)
@@ -68,7 +65,6 @@ const Contenedor = () => {
           }
         });
     }
-    console.log(apiKey);
   }, []);
 
   return (
