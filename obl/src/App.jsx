@@ -11,9 +11,6 @@ import Login from "./componentes/Login";
 import Registro from "./componentes/Registro";
 import NoEncontrado from "./componentes/NoEncontrado";
 import Dashboard from "./componentes/Dashboard";
-import AgregarEvento from "./componentes/DashboardComp/AgregarEvento";
-import ListadoEvento from "./componentes/DashboardComp/ListadoEvento";
-import InformeEventos from "./componentes/DashboardComp/InformeEventos";
 import TiempoRestante from "./componentes/DashboardComp/TiempoRestante";
 
 function App() {
