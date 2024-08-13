@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
 
 const Contenedor = () => {
-  const logout = () => {
-    //CERRAR SESION
-    localStorage.clear();
-  };
+  
+  const [apiKey, setApiKey] = useState(localStorage.getItem("apiKey"));
 
-  const apiKey = localStorage.getItem("apiKey");
+  const logout = () => {
+    localStorage.clear();
+    setApiKey(null);
+  };
+  useEffect(() => {
+    const cambioApiKey = localStorage.getItem("apiKey");
+    if (cambioApiKey != apiKey) {
+      setApiKey(cambioApiKey);
+    }
+  }, []);
 
   return (
     <div className="container-fluid">
@@ -44,21 +51,6 @@ const Contenedor = () => {
               )}
               {apiKey && (
                 <>
-                  <li className="nav-item">
-                    <NavLink className="nav-link" to="/AgregarEvento">
-                      AGREGAR EVENTO
-                    </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink className="nav-link" to="/ListadoEvento">
-                      LISTADO EVENTOS
-                    </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink className="nav-link" to="/InformeEventos">
-                      INFORME EVENTOS
-                    </NavLink>
-                  </li>
                   <li className="nav-item">
                     <Link className="nav-link" to="/Login" onClick={logout}>
                       LOGOUT

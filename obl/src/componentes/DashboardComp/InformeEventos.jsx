@@ -1,6 +1,6 @@
-import React, {useId, useEffect, useRef, useState} from "react";
-import {toast} from "react-toastify";
-import {useDispatch, useSelector} from "react-redux";
+import React, { useId, useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
 import {
   guardarEventos,
   incrementarBiberon,
@@ -10,7 +10,7 @@ import {
   guardarUltimaFecha,
 } from "../../features/eventosSlice";
 
-const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
+const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
   const dispatch = useDispatch();
   const urlAPI = "https://babytracker.develotion.com/";
 
