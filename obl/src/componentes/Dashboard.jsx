@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 import {useDispatch, useSelector} from "react-redux";
 import {guardarCategorias} from "../features/categoriasSlice";
 import {guardarEventos} from "../features/eventosSlice";
@@ -13,13 +14,13 @@ const Dashboard = () => {
   const urlAPI = "https://babytracker.develotion.com/";
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  /* console.log(cats);
+  console.log(eventos); */
   const eventos = useSelector((state) => state.eventos.eventos);
   const ctdBiberonesDia = useSelector((state) => state.eventos.ctdBiberones);
   const ctdPanalesDia = useSelector((state) => state.eventos.ctdPanales);
   const lastUpdate = useSelector((state) => state.eventos.lastUpdate);
   const cats = useSelector((state) => state.categorias.categorias);
-  /* console.log(cats);
-  console.log(eventos); */
 
   useEffect(() => {
     if (
@@ -38,9 +39,35 @@ const Dashboard = () => {
         .then((r) => r.json())
         .then((datos) => {
           if (datos.codigo == 200) {
-            //console.log(datos);
-
             dispatch(guardarCategorias(datos.categorias));
+            fetch(
+              `${urlAPI}eventos.php?idUsuario=${localStorage.getItem("id")}`,
+              {
+                headers: {
+                  "Content-type": "application/json",
+                  apikey: localStorage.getItem("apiKey"),
+                  iduser: localStorage.getItem("id"),
+                },
+              }
+            )
+              .then((r) => r.json())
+              .then((datos) => {
+                dispatch(guardarEventos(datos.eventos));
+              });
+          } else if (datos.codigo == 401) {
+            //console.log(datos.codigo, datos.mensaje);
+            toast.warn(`ERROR: ${datos.mensaje}.`, {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+            localStorage.clear();
+            navigate("/Login");
           } else {
             //console.log(datos.codigo, datos.mensaje);
             toast.warn(`ERROR: ${datos.mensaje}.`, {
@@ -55,17 +82,6 @@ const Dashboard = () => {
             });
           }
         });
-      fetch(`${urlAPI}eventos.php?idUsuario=${localStorage.getItem("id")}`, {
-        headers: {
-          "Content-type": "application/json",
-          apikey: localStorage.getItem("apiKey"),
-          iduser: localStorage.getItem("id"),
-        },
-      })
-        .then((r) => r.json())
-        .then((datos) => {
-          dispatch(guardarEventos(datos.eventos));
-        });
     }
   }, []);
   return (
@@ -78,7 +94,7 @@ const Dashboard = () => {
       <AgregarEvento cats={cats} />
       <ListadoEvento eventos={eventos} cats={cats} />
       <GraficosEventos eventos={eventos} cats={cats} />
-      <TiempoRestante eventos={eventos}/>
+      <TiempoRestante eventos={eventos} />
     </div>
   );
 };

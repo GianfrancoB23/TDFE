@@ -5,12 +5,28 @@ import {Link, useNavigate} from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
+  const urlAPI = "https://babytracker.develotion.com/";
   useEffect(() => {
     if (
       localStorage.getItem("apiKey") != null ||
       localStorage.getItem("apiKey") != undefined
     ) {
-      navigate("/Dashboard");
+      fetch(`${urlAPI}categorias.php`, {
+        headers: {
+          "Content-type": "application/json",
+          apikey: localStorage.getItem("apiKey"),
+          iduser: localStorage.getItem("id"),
+        },
+      })
+        .then((r) => r.json())
+        .then((datos) => {
+          if (datos.codigo == 401) {
+            //console.log(datos);
+            localStorage.clear();
+          } else if (datos.codigo == "200") {
+            navigate("/Dashboard");
+          }
+        });
     }
   }, [navigate]);
   const apiURL = "https://babytracker.develotion.com/";

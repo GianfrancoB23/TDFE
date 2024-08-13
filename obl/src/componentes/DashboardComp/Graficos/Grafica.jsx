@@ -77,7 +77,7 @@ const Grafica = ({cats, datos, titleGraph, detalle, tipo}) => {
   });
 
   return (
-    <div className="col-sm-4">
+    <div className="col-sm-6">
       {
         <Bar
           options={options}

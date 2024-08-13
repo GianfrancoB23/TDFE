@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
-import "../../src/estilos.css"
+import React, {useEffect, useState} from "react";
+import {Link, NavLink, Outlet, useNavigate} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faArrowRightFromBracket} from "@fortawesome/free-solid-svg-icons";
+import "../../src/estilos.css";
 
 const Contenedor = () => {
-
+  const urlAPI = "https://babytracker.develotion.com/";
+  const navigate = useNavigate();
   const [apiKey, setApiKey] = useState(localStorage.getItem("apiKey"));
 
   const logout = () => {
@@ -13,9 +14,55 @@ const Contenedor = () => {
     setApiKey(null);
   };
   useEffect(() => {
+    navigate("/Login");
     const cambioApiKey = localStorage.getItem("apiKey");
     if (cambioApiKey != apiKey) {
       setApiKey(cambioApiKey);
+    }
+    if (
+      localStorage.getItem("apiKey") == null ||
+      localStorage.getItem("apiKey" == undefined)
+    ) {
+      navigate("/Login");
+      fetch(`${urlAPI}categorias.php`, {
+        headers: {
+          "Content-type": "application/json",
+          apikey: localStorage.getItem("apiKey"),
+          iduser: localStorage.getItem("id"),
+        },
+      })
+        .then((r) => r.json())
+        .then((datos) => {
+          if (datos.codigo == 200) {
+            navigate("/Dashboard");
+          } else if (datos.codigo == 401) {
+            localStorage.clear();
+            //console.log(datos.codigo, datos.mensaje);
+            toast.warn(`ERROR: ${datos.mensaje}.`, {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+            navigate("/Login");
+          } else {
+            //console.log(datos.codigo, datos.mensaje);
+            toast.warn(`ERROR: ${datos.mensaje}.`, {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: false,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+          }
+        });
     }
   }, []);
 
@@ -64,7 +111,10 @@ const Contenedor = () => {
                   <li className="nav-item">
                     <Link className="nav-link" to="/Login" onClick={logout}>
                       LOGOUT
-                      <FontAwesomeIcon className="m-2 my-0" icon={faArrowRightFromBracket} />
+                      <FontAwesomeIcon
+                        className="m-2 my-0"
+                        icon={faArrowRightFromBracket}
+                      />
                     </Link>
                   </li>
                 </>
