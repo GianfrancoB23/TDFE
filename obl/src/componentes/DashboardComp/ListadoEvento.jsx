@@ -1,4 +1,5 @@
 import React, {useId, useEffect, useRef, useState} from "react";
+import {useSelector, useDispatch} from "react-redux";
 import Tarjeta from "./Listado/Tarjeta";
 
 const ListadoEventos = ({eventos, cats}) => {

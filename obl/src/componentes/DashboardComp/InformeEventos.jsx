@@ -30,46 +30,10 @@ const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
     useState(null);
   const [tiempoTranscurridoPanal, settiempoTranscurridoPanal] = useState(null);
 
-  // Función para actualizar eventos
-  const actualizarBiberon = () => {
-    /* console.log("Biberon actualizado"); */
-    setUltimaActualizacionBiberon(new Date());
-
-    fetch(`${urlAPI}eventos.php?idUsuario=${localStorage.getItem("id")}`, {
-      headers: {
-        "Content-type": "application/json",
-        apikey: localStorage.getItem("apiKey"),
-        iduser: localStorage.getItem("id"),
-      },
-    })
-      .then((r) => r.json())
-      .then((datos) => {
-        dispatch(guardarEventos(datos.eventos));
-        /* console.log(datos.eventos); */
-      });
-  };
-  const actualizarPanales = () => {
-    /* console.log("Pañales actualizado"); */
-    setUltimaActualizacionPanales(new Date());
-
-    fetch(`${urlAPI}eventos.php?idUsuario=${localStorage.getItem("id")}`, {
-      headers: {
-        "Content-type": "application/json",
-        apikey: localStorage.getItem("apiKey"),
-        iduser: localStorage.getItem("id"),
-      },
-    })
-      .then((r) => r.json())
-      .then((datos) => {
-        dispatch(guardarEventos(datos.eventos));
-        /* console.log(datos.eventos); */
-      });
-  };
-
   // Calcula los conteos de biberones cuando eventos cambia
   useEffect(() => {
-    console.log("USANDO EFECTO");
-    console.log(eventos);
+    /* console.log("USANDO EFECTO");
+    console.log(eventos); */
     if (eventos.length === 0) return; // Si no hay eventos no ghace nada
 
     dispatch(resetBiberon());
@@ -77,15 +41,15 @@ const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
 
     eventos.forEach((evento) => {
       let fechaEvt = new Date(evento.fecha);
-      console.log(evento);
+      /* console.log(evento);
       console.log(evento.fecha);
-
+ */
       if (
         evento.idCategoria == 35 &&
         fechaEvt >= fechaMinima &&
         fechaEvt <= fechaMaxima
       ) {
-        console.log("TRUE 35");
+        /* console.log("TRUE 35"); */
         /* console.log(
           "Evento con categoría 35 encontrado:",
           evento.id,
@@ -106,7 +70,7 @@ const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
         fechaEvt >= fechaMinima &&
         fechaEvt <= fechaMaxima
       ) {
-        console.log("TRUE 33");
+        /* console.log("TRUE 33"); */
         /* console.log(
           "Evento con categoría 33 encontrado:",
           evento.id,
@@ -174,14 +138,14 @@ const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
               </span>
             </p>
           </div>
-          <div className="card-footer">
+          {/* <div className="card-footer">
             <button
               id="biberonesBtn"
               className="btn btn-primary w-100"
               onClick={actualizarBiberon}>
               ACTUALIZAR
             </button>
-          </div>
+          </div> */}
         </div>
         <div id="panalesCard" className="card mb-3 col-6 m-1">
           <div className="card-header">
@@ -207,14 +171,14 @@ const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
               </span>
             </p>
           </div>
-          <div className="card-footer">
+          {/* <div className="card-footer">
             <button
               id="panalesBtn"
               className="btn btn-warning w-100"
               onClick={actualizarPanales}>
               ACTUALIZAR
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
