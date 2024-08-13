@@ -1,38 +1,36 @@
-import React, {useId, useEffect, useRef, useState} from "react";
-import {toast} from "react-toastify";
-import {useDispatch, useSelector} from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   guardarEventos,
   incrementarBiberon,
   resetBiberon,
   incrementarPanal,
   resetPanal,
-  guardarUltimaFecha,
 } from "../../features/eventosSlice";
 
-const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
+const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
   const dispatch = useDispatch();
-
-  let fechaMinima = new Date();
-  let fechaMaxima = new Date();
-  fechaMinima.setHours(0, 0, 0, 0);
-  fechaMaxima.setHours(23, 59, 59, 59);
-  let fechaBase = new Date("2023-01-01");
-  let fechaUltimoBiberon = fechaBase;
-  let fechaUltimoPanal = fechaBase;
 
   const [ultimaActualizacionBiberon, setUltimaActualizacionBiberon] =
     useState(null);
   const [ultimaActualizacionPanales, setUltimaActualizacionPanales] =
     useState(null);
-  const [tiempoTranscurridoBiberon, settiempoTranscurridoBiberon] =
-    useState(null);
-  const [tiempoTranscurridoPanal, settiempoTranscurridoPanal] = useState(null);
+  const [tiempoTranscurridoBiberon, setTiempoTranscurridoBiberon] =
+    useState("Nunca");
+  const [tiempoTranscurridoPanal, setTiempoTranscurridoPanal] = useState("Nunca");
 
-  /*  */ // Calcula los conteos de biberones cuando eventos cambia
+  let fechaMinima = new Date();
+  let fechaMaxima = new Date();
+  fechaMinima.setHours(0, 0, 0, 0);
+  fechaMaxima.setHours(23, 59, 59, 59);
+
+  // Calcula los conteos de biberones cuando eventos cambia
   useEffect(() => {
+    if (eventos.length === 0) return; // Si no hay eventos no hace nada
 
-    if (eventos.length === 0) return; // Si no hay eventos no ghace nada
+    let fechaBase = new Date(0);
+    let fechaUltimoBiberon = fechaBase;
+    let fechaUltimoPanal = fechaBase;
 
     dispatch(resetBiberon());
     dispatch(resetPanal());
@@ -41,22 +39,22 @@ const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
       let fechaEvt = new Date(evento.fecha);
 
       if (
-        evento.idCategoria == 35 &&
+        evento.idCategoria === 35 &&
         fechaEvt >= fechaMinima &&
         fechaEvt <= fechaMaxima
       ) {
         dispatch(incrementarBiberon());
+        
         if (fechaEvt > fechaUltimoBiberon) {
           fechaUltimoBiberon = fechaEvt;
         }
-        settiempoTranscurridoBiberon(diferenciaTiempo(fechaUltimoBiberon));
       }
-      if (ctdBiberonesDia == 0) {
-        settiempoTranscurridoBiberon(0 + ":" + 0 + ":" + 0 + ":" + 0);
+      if (ctdBiberonesDia === 0) {
+        setTiempoTranscurridoBiberon("Nunca");
       }
 
       if (
-        evento.idCategoria == 33 &&
+        evento.idCategoria === 33 &&
         fechaEvt >= fechaMinima &&
         fechaEvt <= fechaMaxima
       ) {
@@ -64,29 +62,56 @@ const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
         if (fechaEvt > fechaUltimoPanal) {
           fechaUltimoPanal = fechaEvt;
         }
-        settiempoTranscurridoPanal(diferenciaTiempo(fechaUltimoPanal));
       }
-      if (ctdPanalesDia == 0) {
-        settiempoTranscurridoPanal("NUNCA");
+      if (ctdPanalesDia === 0) {
+        setTiempoTranscurridoPanal("Nunca");
       }
     });
-  }, [eventos, fechaMinima, fechaMaxima]);
 
-  const diferenciaTiempo = (ultimaFecha) => {
-    const diferenciaMs = new Date() - ultimaFecha;
+    setUltimaActualizacionBiberon(fechaUltimoBiberon);
+    setUltimaActualizacionPanales(fechaUltimoPanal);
 
-    const segundosTotales = Math.floor(diferenciaMs / 1000);
-    const minutosTotales = Math.floor(segundosTotales / 60);
-    const horasTotales = Math.floor(minutosTotales / 60);
-    const diasTotales = Math.floor(horasTotales / 24);
+    const calcularTiempoTranscurrido = () => {
+      const ahora = new Date();
 
-    const segundos = segundosTotales % 60;
-    const minutos = minutosTotales % 60;
-    const horas = horasTotales % 24;
-    const dias = diasTotales;
+      const diferenciaTiempo = (ultimaFecha) => {
+        const diferenciaMs = ahora - ultimaFecha;
+        const segundosTotales = Math.floor(diferenciaMs / 1000);
+        const minutosTotales = Math.floor(segundosTotales / 60);
+        const horasTotales = Math.floor(minutosTotales / 60);
+        const diasTotales = Math.floor(horasTotales / 24);
 
-    return dias + ":" + horas + ":" + minutos + ":" + segundos;
-  };
+        const segundos = segundosTotales % 60;
+        const minutos = minutosTotales % 60;
+        const horas = horasTotales % 24;
+        const dias = diasTotales;
+
+        return `${dias} dias ${horas} hor ${minutos} min ${segundos} seg`;
+      };
+
+      if (ultimaActualizacionBiberon) {
+        setTiempoTranscurridoBiberon(diferenciaTiempo(ultimaActualizacionBiberon));
+      }
+
+      if (ultimaActualizacionPanales) {
+        setTiempoTranscurridoPanal(diferenciaTiempo(ultimaActualizacionPanales));
+      }
+
+      if (ctdBiberonesDia === 0) {
+        setTiempoTranscurridoBiberon("Nunca");
+      }
+      if (ctdPanalesDia === 0) {
+        setTiempoTranscurridoPanal("Nunca");
+      }
+    };
+
+    calcularTiempoTranscurrido(); // Calcular al montar el componente
+
+    const intervalo = setInterval(calcularTiempoTranscurrido, 1000); // Actualizar cada segundo
+
+    return () => clearInterval(intervalo); // Limpiar el intervalo al desmontar el componente
+
+  }, [eventos, ctdBiberonesDia, ctdPanalesDia]);
 
   return (
     <div className="container my-2">
@@ -102,11 +127,9 @@ const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
               <span id="totalBiberones">{ctdBiberonesDia}</span>
             </p>
             <p className="card-text">
-              <strong>Tiempo Transcurrido desde el Último Biberón: </strong>
+              <strong>Último Biberón: </strong>
               <span id="tiempoBiberon">
-                {tiempoTranscurridoBiberon
-                  ? tiempoTranscurridoBiberon
-                  : "Nunca"}
+                {tiempoTranscurridoBiberon}
               </span>
             </p>
           </div>
@@ -121,20 +144,12 @@ const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
               <span id="totalPanales">{ctdPanalesDia}</span>
             </p>
             <p className="card-text">
-              <strong>Tiempo Transcurrido desde el Último Cambio: </strong>
+              <strong>Último Cambio: </strong>
               <span id="tiempoPanales">
-                {tiempoTranscurridoPanal ? tiempoTranscurridoPanal : "Nunca"}
+                {tiempoTranscurridoPanal}
               </span>
             </p>
           </div>
-          {/* <div className="card-footer">
-            <button
-              id="panalesBtn"
-              className="btn btn-warning w-100"
-              onClick={actualizarPanales}>
-              ACTUALIZAR
-            </button>
-          </div> */}
         </div>
       </div>
     </div>
