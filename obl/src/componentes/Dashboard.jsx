@@ -94,7 +94,7 @@ const Dashboard = () => {
       <AgregarEvento cats={cats} />
       <ListadoEvento eventos={eventos} cats={cats} />
       <GraficosEventos eventos={eventos} cats={cats} />
-      <TiempoRestante eventos={eventos} />
+      <TiempoRestante eventos={eventos}  ctdBiberonesDia={ctdBiberonesDia}/>
     </div>
   );
 };

@@ -2,20 +2,25 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {guardarEventos} from "../../features/eventosSlice";
 
-const TiempoRestante = ({eventos}) => {
+const TiempoRestante = ({eventos, ctdBiberonesDia}) => {
   const dispatch = useDispatch();
 
   const [tiempoProximoBiberon, setTiempoProximoBiberon] = useState("");
 
   useEffect(() => {
-    if (eventos.length === 0) return; // Si no hay eventos no ghace nada
+
+    if (eventos.length == 0){
+      setTiempoProximoBiberon("Sin registros")
+      return; // Si no hay eventos no ghace nada
+    } 
+      
 
     let fechaUltimoBiberon = new Date(0);
 
     eventos.forEach((evento) => {
       let fechaEvt = new Date(evento.fecha);
 
-      if (evento.idCategoria === 35 && fechaEvt > fechaUltimoBiberon) {
+      if (evento.idCategoria == 35 && fechaEvt > fechaUltimoBiberon) {
         fechaUltimoBiberon = fechaEvt;
       }
     });
@@ -48,11 +53,16 @@ const TiempoRestante = ({eventos}) => {
     //setInterval es una funcion que le pasas 2 parametros
     //primero lo que queres que ejecute
     //segundo el intervalo de tiempo en milisegundos cada cuanto queres que se ejecute
-    setInterval(() => {
+
+    const intervalId = setInterval(() => {
       setTiempoProximoBiberon(calcularTiempoRestante());
     }, 1000); // Actualizar cada segundo
+
+    // Limpia el intervalo al desmontar o al cambiar la dependencia
+    return () => clearInterval(intervalId);
+
     /* FIN GENERADO POR CHATGPT */
-  }, [eventos]);
+  }, [eventos,ctdBiberonesDia]);
 
   return (
     <div className="container mt-0 pt-4 bg-light mb-0">
