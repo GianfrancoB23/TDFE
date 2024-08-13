@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import {
   guardarEventos,
   incrementarBiberon,
@@ -8,7 +8,7 @@ import {
   resetPanal,
 } from "../../features/eventosSlice";
 
-const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
+const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
   const dispatch = useDispatch();
 
   const [ultimaActualizacionBiberon, setUltimaActualizacionBiberon] =
@@ -17,7 +17,8 @@ const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
     useState(null);
   const [tiempoTranscurridoBiberon, setTiempoTranscurridoBiberon] =
     useState("Nunca");
-  const [tiempoTranscurridoPanal, setTiempoTranscurridoPanal] = useState("Nunca");
+  const [tiempoTranscurridoPanal, setTiempoTranscurridoPanal] =
+    useState("Nunca");
 
   let fechaMinima = new Date();
   let fechaMaxima = new Date();
@@ -39,12 +40,12 @@ const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
       let fechaEvt = new Date(evento.fecha);
 
       if (
-        evento.idCategoria === 35 &&
+        evento.idCategoria == 35 &&
         fechaEvt >= fechaMinima &&
         fechaEvt <= fechaMaxima
       ) {
         dispatch(incrementarBiberon());
-        
+
         if (fechaEvt > fechaUltimoBiberon) {
           fechaUltimoBiberon = fechaEvt;
         }
@@ -54,7 +55,7 @@ const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
       }
 
       if (
-        evento.idCategoria === 33 &&
+        evento.idCategoria == 33 &&
         fechaEvt >= fechaMinima &&
         fechaEvt <= fechaMaxima
       ) {
@@ -90,11 +91,15 @@ const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
       };
 
       if (ultimaActualizacionBiberon) {
-        setTiempoTranscurridoBiberon(diferenciaTiempo(ultimaActualizacionBiberon));
+        setTiempoTranscurridoBiberon(
+          diferenciaTiempo(ultimaActualizacionBiberon)
+        );
       }
 
       if (ultimaActualizacionPanales) {
-        setTiempoTranscurridoPanal(diferenciaTiempo(ultimaActualizacionPanales));
+        setTiempoTranscurridoPanal(
+          diferenciaTiempo(ultimaActualizacionPanales)
+        );
       }
 
       if (ctdBiberonesDia === 0) {
@@ -110,7 +115,6 @@ const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
     const intervalo = setInterval(calcularTiempoTranscurrido, 1000); // Actualizar cada segundo
 
     return () => clearInterval(intervalo); // Limpiar el intervalo al desmontar el componente
-
   }, [eventos, ctdBiberonesDia, ctdPanalesDia]);
 
   return (
@@ -128,9 +132,7 @@ const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
             </p>
             <p className="card-text">
               <strong>Último Biberón: </strong>
-              <span id="tiempoBiberon">
-                {tiempoTranscurridoBiberon}
-              </span>
+              <span id="tiempoBiberon">{tiempoTranscurridoBiberon}</span>
             </p>
           </div>
         </div>
@@ -145,9 +147,7 @@ const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
             </p>
             <p className="card-text">
               <strong>Último Cambio: </strong>
-              <span id="tiempoPanales">
-                {tiempoTranscurridoPanal}
-              </span>
+              <span id="tiempoPanales">{tiempoTranscurridoPanal}</span>
             </p>
           </div>
         </div>
