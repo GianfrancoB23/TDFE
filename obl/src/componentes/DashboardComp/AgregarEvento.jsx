@@ -193,7 +193,7 @@ const AgregarEvento = ({cats}) => {
       <button
         type="button"
         className="btn btn-primary mt-2"
-        disabled={timeSel == "" || new Date(timeSel) > Date.now()}
+        disabled={timeSel == "" || new Date(timeSel) > Date.now() || catSel == "" || catSel == null}
         onClick={cargarEvento}>
         CARGAR
       </button>
