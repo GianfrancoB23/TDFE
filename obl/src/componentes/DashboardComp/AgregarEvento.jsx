@@ -128,7 +128,7 @@ const AgregarEvento = ({cats}) => {
   };
 
   return (
-    <div className="container bg-light">
+    <div className="container  bg-light mb-0">
       <h2 className="text-center text-center bg-info text-dark p-3 mb-0">
         FORMULARIO DE EVENTO
       </h2>

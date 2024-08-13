@@ -118,7 +118,7 @@ const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
   }, [eventos, ctdBiberonesDia, ctdPanalesDia]);
 
   return (
-    <div className="container my-2">
+    <div className="container mt-0 pt-4  bg-light mb-0">
       <h2 className="text-center mb-4 text-center bg-info text-dark p-3">
         INFORME EVENTOS
       </h2>

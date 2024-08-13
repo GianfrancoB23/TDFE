@@ -16,7 +16,7 @@ const ListadoEventos = ({eventos, cats}) => {
   };
 
   return (
-    <div className="container justify-content-center align-items-center text-center mt-4">
+    <div className="container justify-content-center align-items-center text-center mt-0 pt-4 bg-light mb-0">
       <h2 className="text-center bg-info text-dark p-3 mb-0 ">
         LISTADO DE EVENTOS
       </h2>

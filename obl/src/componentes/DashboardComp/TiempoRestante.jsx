@@ -55,7 +55,7 @@ const TiempoRestante = ({eventos}) => {
   }, [eventos]);
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-0 pt-4 bg-light mb-0">
       <div className="card text-center">
         <div className="card-header bg-dark text-white">
           TIEMPO RESTANTE PARA EL PRÓXIMO BIBERÓN:
