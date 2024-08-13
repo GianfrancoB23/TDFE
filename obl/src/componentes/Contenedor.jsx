@@ -7,7 +7,13 @@ import "../../src/estilos.css";
 const Contenedor = () => {
   const urlAPI = "https://babytracker.develotion.com/";
   const navigate = useNavigate();
-  const [apiKey, setApiKey] = useState(localStorage.getItem("apiKey"));
+  const [apiKey, setApiKey] = useState(null);
+  console.log(apiKey);
+  const storedApiKey = localStorage.getItem("apiKey");
+  if (storedApiKey != apiKey) {
+    setApiKey(storedApiKey);
+  }
+  console.log(apiKey);
 
   const logout = () => {
     localStorage.clear();
@@ -15,10 +21,8 @@ const Contenedor = () => {
   };
   useEffect(() => {
     navigate("/Login");
-    const cambioApiKey = localStorage.getItem("apiKey");
-    if (cambioApiKey != apiKey) {
-      setApiKey(cambioApiKey);
-    }
+
+    console.log(apiKey);
     if (
       localStorage.getItem("apiKey") == null ||
       localStorage.getItem("apiKey" == undefined)
@@ -64,6 +68,7 @@ const Contenedor = () => {
           }
         });
     }
+    console.log(apiKey);
   }, []);
 
   return (

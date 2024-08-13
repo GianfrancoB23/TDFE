@@ -101,7 +101,6 @@ const Registro = () => {
           if (data.codigo == 200) {
             localStorage.setItem("apiKey", data.apiKey);
             localStorage.setItem("id", data.id);
-            localStorage.setItem("usuario", userCampo);
             navigate("/Dashboard");
           } else {
             /*  console.log(data.codigo, data.mensaje); */
@@ -132,7 +131,7 @@ const Registro = () => {
   };
 
   return (
-    <div>
+    <div className="container justify-content-center align-items-center text-center">
       <h2>REGISTRO EN LA APLICACIÓN</h2>
       <label htmlFor={idUserReg}>Usuario</label>
       <input

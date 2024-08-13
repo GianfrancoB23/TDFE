@@ -53,7 +53,7 @@ const GraficosEventos = ({eventos, cats}) => {
 
   return (
     <div className="container justify-content-center align-items-center text-center">
-      <h2>Analisis</h2>
+      <h2 className="text-center bg-info text-dark p-3 mb-0">Analisis</h2>
       <div className="row">
         <Grafica
           cats={cats}

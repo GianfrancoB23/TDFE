@@ -10,6 +10,8 @@ import {
 
 const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
   const dispatch = useDispatch();
+  dispatch(resetBiberon());
+  dispatch(resetPanal());
 
   const [ultimaActualizacionBiberon, setUltimaActualizacionBiberon] =
     useState(null);
@@ -90,17 +92,15 @@ const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
         return `${dias} dias ${horas} hor ${minutos} min ${segundos} seg`;
       };
 
-      if (ultimaActualizacionBiberon) {
-        setTiempoTranscurridoBiberon(
-          diferenciaTiempo(ultimaActualizacionBiberon)
-        );
-      }
+      //if (ultimaActualizacionBiberon) {
+      setTiempoTranscurridoBiberon(
+        diferenciaTiempo(ultimaActualizacionBiberon)
+      );
+      //}
 
-      if (ultimaActualizacionPanales) {
-        setTiempoTranscurridoPanal(
-          diferenciaTiempo(ultimaActualizacionPanales)
-        );
-      }
+      //if (ultimaActualizacionPanales) {
+      setTiempoTranscurridoPanal(diferenciaTiempo(ultimaActualizacionPanales));
+      // }
 
       if (ctdBiberonesDia === 0) {
         setTiempoTranscurridoBiberon("Nunca");
@@ -119,11 +119,13 @@ const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
 
   return (
     <div className="container my-2">
-      <h2 className="text-center mb-4">INFORME EVENTOS</h2>
+      <h2 className="text-center mb-4 text-center bg-info text-dark p-3">
+        INFORME EVENTOS
+      </h2>
       <div className="d-flex col-12 justify-content-center">
         <div id="biberonesCard" className="card mb-3 col-6 m-1">
-          <div className="card-header">
-            <h3 className="card-title text-center">Biberones</h3>
+          <div className="card-header bg-dark text-white">
+            <h3 className="card-title text-center ">Biberones</h3>
           </div>
           <div className="card-body">
             <p className="card-text">
@@ -137,7 +139,7 @@ const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
           </div>
         </div>
         <div id="panalesCard" className="card mb-3 col-6 m-1">
-          <div className="card-header">
+          <div className="card-header bg-dark text-white">
             <h3 className="card-title text-center">Pañales</h3>
           </div>
           <div className="card-body">

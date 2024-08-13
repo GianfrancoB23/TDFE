@@ -128,8 +128,10 @@ const AgregarEvento = ({cats}) => {
   };
 
   return (
-    <div className="container">
-      <h2 className="text-center">FORMULARIO DE EVENTO</h2>
+    <div className="container bg-light">
+      <h2 className="text-center text-center bg-info text-dark p-3 mb-0">
+        FORMULARIO DE EVENTO
+      </h2>
       <div className="form-group mt-2">
         <label htmlFor={idSlcCategoria}>Categoría</label>
         <select

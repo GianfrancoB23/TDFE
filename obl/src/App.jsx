@@ -14,6 +14,7 @@ import Dashboard from "./componentes/Dashboard";
 import TiempoRestante from "./componentes/DashboardComp/TiempoRestante";
 
 function App() {
+  const logueado = localStorage.getItem("apiKey") ? true : false;
   return (
     <Provider store={store}>
       <BrowserRouter>

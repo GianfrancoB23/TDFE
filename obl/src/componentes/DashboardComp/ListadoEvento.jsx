@@ -17,8 +17,10 @@ const ListadoEventos = ({eventos, cats}) => {
 
   return (
     <div className="container justify-content-center align-items-center text-center mt-4">
-      <h2 className="text-center">LISTADO DE EVENTOS</h2>
-      <h3>HOY:</h3>
+      <h2 className="text-center bg-info text-dark p-3 mb-0 ">
+        LISTADO DE EVENTOS
+      </h2>
+      <h3 className="bg-secondary bg-gradient text-white p-3 mb-2 ">HOY:</h3>
       <div className="row justify-content-center">
         {eventos
           .filter((evento) => filtroFecha(evento.fecha))
@@ -34,7 +36,9 @@ const ListadoEventos = ({eventos, cats}) => {
             />
           ))}
       </div>
-      <h3>DÍAS ANTERIORES:</h3>
+      <h3 className="bg-secondary bg-gradient text-white p-3 mb-2 ">
+        DÍAS ANTERIORES:
+      </h3>
 
       <div className="row justify-content-center">
         {eventos
