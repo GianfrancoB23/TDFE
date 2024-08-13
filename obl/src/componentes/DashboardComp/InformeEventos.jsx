@@ -67,7 +67,7 @@ const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
         settiempoTranscurridoPanal(diferenciaTiempo(fechaUltimoPanal));
       }
       if (ctdPanalesDia == 0) {
-        settiempoTranscurridoPanal(0 + ":" + 0 + ":" + 0 + ":" + 0);
+        settiempoTranscurridoPanal("NUNCA");
       }
     });
   }, [eventos, fechaMinima, fechaMaxima]);
@@ -109,14 +109,6 @@ const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
                   : "Nunca"}
               </span>
             </p>
-            <p className="card-text">
-              <strong>Ultima Actualizacion: </strong>
-              <span id="tiempoBiberon">
-                {ultimaActualizacionBiberon
-                  ? ultimaActualizacionBiberon.toLocaleString()
-                  : "Nunca"}
-              </span>
-            </p>
           </div>
         </div>
         <div id="panalesCard" className="card mb-3 col-6 m-1">
@@ -132,14 +124,6 @@ const InformeEventos = ({eventos, ctdBiberonesDia, ctdPanalesDia}) => {
               <strong>Tiempo Transcurrido desde el Último Cambio: </strong>
               <span id="tiempoPanales">
                 {tiempoTranscurridoPanal ? tiempoTranscurridoPanal : "Nunca"}
-              </span>
-            </p>
-            <p className="card-text">
-              <strong>Ultima Actualizacion: </strong>
-              <span id="tiempoBiberon">
-                {ultimaActualizacionPanales
-                  ? ultimaActualizacionPanales.toLocaleString()
-                  : "Nunca"}
               </span>
             </p>
           </div>
