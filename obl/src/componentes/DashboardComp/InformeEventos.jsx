@@ -29,7 +29,13 @@ const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
 
     // Calcula los conteos de biberones cuando eventos cambia
     useEffect(() => {
-        if (eventos.length === 0) return; // Si no hay eventos no hace nada
+        if (eventos.length == 0){
+            dispatch(resetBiberon())
+            dispatch(resetPanal())
+            setTiempoTranscurridoBiberon("Nunca");
+            setTiempoTranscurridoPanal("Nunca");
+            return; // Si no hay eventos no hace nada
+        } 
 
         let fechaBase = new Date(0);
         let fechaUltimoBiberon = fechaBase;
@@ -52,7 +58,7 @@ const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
                     fechaUltimoBiberon = fechaEvt;
                 }
             }
-            if (ctdBiberonesDia === 0) {
+            if (ctdBiberonesDia == 0) {
                 setTiempoTranscurridoBiberon("Nunca");
             }
 
@@ -66,7 +72,7 @@ const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
                     fechaUltimoPanal = fechaEvt;
                 }
             }
-            if (ctdPanalesDia === 0) {
+            if (ctdPanalesDia == 0) {
                 setTiempoTranscurridoPanal("Nunca");
             }
         });
@@ -102,10 +108,10 @@ const InformeEventos = ({ eventos, ctdBiberonesDia, ctdPanalesDia }) => {
             setTiempoTranscurridoPanal(diferenciaTiempo(ultimaActualizacionPanales));
             // }
 
-            if (ctdBiberonesDia === 0) {
+            if (ctdBiberonesDia == 0) {
                 setTiempoTranscurridoBiberon("Nunca");
             }
-            if (ctdPanalesDia === 0) {
+            if (ctdPanalesDia == 0) {
                 setTiempoTranscurridoPanal("Nunca");
             }
         };
