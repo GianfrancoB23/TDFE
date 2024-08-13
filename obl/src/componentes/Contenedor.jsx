@@ -18,8 +18,6 @@ const Contenedor = () => {
     setApiKey(null);
   };
   useEffect(() => {
-    navigate("/Login");
-
     if (
       localStorage.getItem("apiKey") == null ||
       localStorage.getItem("apiKey" == undefined)
@@ -64,6 +62,8 @@ const Contenedor = () => {
             });
           }
         });
+    } else {
+      navigate("/Dashboard");
     }
   }, []);
 

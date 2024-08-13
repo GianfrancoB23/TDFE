@@ -9,6 +9,7 @@ import ListadoEvento from "./DashboardComp/ListadoEvento";
 import InformeEventos from "./DashboardComp/InformeEventos";
 import GraficosEventos from "./DashboardComp/GraficosEventos";
 import TiempoRestante from "./DashboardComp/TiempoRestante";
+import {Atom} from "react-loading-indicators";
 
 const Dashboard = () => {
   const urlAPI = "https://babytracker.develotion.com/";
@@ -21,8 +22,10 @@ const Dashboard = () => {
   const ctdPanalesDia = useSelector((state) => state.eventos.ctdPanales);
   const lastUpdate = useSelector((state) => state.eventos.lastUpdate);
   const cats = useSelector((state) => state.categorias.categorias);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     if (
       localStorage.getItem("apiKey") == null ||
       localStorage.getItem("apiKey" == undefined)
@@ -53,7 +56,8 @@ const Dashboard = () => {
               .then((r) => r.json())
               .then((datos) => {
                 dispatch(guardarEventos(datos.eventos));
-              });
+              })
+              .finally(() => setIsLoading(false));
           } else if (datos.codigo == 401) {
             //console.log(datos.codigo, datos.mensaje);
             toast.warn(`ERROR: ${datos.mensaje}.`, {
@@ -84,6 +88,9 @@ const Dashboard = () => {
         });
     }
   }, []);
+  if (isLoading) {
+    return <Atom size="big" style={{fontSize: "35px"}} />;
+  }
   return (
     <div>
       <InformeEventos
@@ -94,7 +101,7 @@ const Dashboard = () => {
       <AgregarEvento cats={cats} />
       <ListadoEvento eventos={eventos} cats={cats} />
       <GraficosEventos eventos={eventos} cats={cats} />
-      <TiempoRestante eventos={eventos}  ctdBiberonesDia={ctdBiberonesDia}/>
+      <TiempoRestante eventos={eventos} ctdBiberonesDia={ctdBiberonesDia} />
     </div>
   );
 };

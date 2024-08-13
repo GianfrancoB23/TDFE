@@ -12,21 +12,24 @@ import Registro from "./componentes/Registro";
 import NoEncontrado from "./componentes/NoEncontrado";
 import Dashboard from "./componentes/Dashboard";
 import TiempoRestante from "./componentes/DashboardComp/TiempoRestante";
+import {Atom} from "react-loading-indicators";
+import {Suspense} from "react";
 
 function App() {
-  const logueado = localStorage.getItem("apiKey") ? true : false;
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Contenedor />}>
-            <Route path="/Login" element={<Login />} />
-            <Route path="/Registro" element={<Registro />} />
-            <Route path="/Dashboard" element={<Dashboard />} />
-            <Route path="*" element={<NoEncontrado />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+      <Suspense fallback={<Atom size="big" style={{fontSize: "35px"}} />}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Contenedor />}>
+              <Route path="/Login" element={<Login />} />
+              <Route path="/Registro" element={<Registro />} />
+              <Route path="/Dashboard" element={<Dashboard />} />
+              <Route path="*" element={<NoEncontrado />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </Suspense>
       <ToastContainer />
     </Provider>
   );

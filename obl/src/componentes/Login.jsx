@@ -2,11 +2,14 @@ import React, {useEffect, useState, useId, useRef} from "react";
 import {toast} from "react-toastify";
 /* import '../bootstrap.min.css' */
 import {Link, useNavigate} from "react-router-dom";
+import {Atom} from "react-loading-indicators";
 
 const Login = () => {
   const navigate = useNavigate();
   const urlAPI = "https://babytracker.develotion.com/";
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
+    setIsLoading(true);
     if (
       localStorage.getItem("apiKey") != null ||
       localStorage.getItem("apiKey") != undefined
@@ -26,7 +29,8 @@ const Login = () => {
           } else if (datos.codigo == "200") {
             navigate("/Dashboard");
           }
-        });
+        })
+        .finally(() => setIsLoading(false));
     }
   }, [navigate]);
   const apiURL = "https://babytracker.develotion.com/";
@@ -45,6 +49,7 @@ const Login = () => {
     (passCampoLogin.current.textContent = e.target.value); */
 
   const ingresar = () => {
+    setIsLoading(true);
     /*  const user = userCampoLogin.current.value;
     const pass = passCampoLogin.current.value; */
     const user = userCampoLogin;
@@ -83,7 +88,8 @@ const Login = () => {
               theme: "light",
             });
           }
-        });
+        })
+        .finally(() => setIsLoading(false));
     } else {
       toast.error("Debe completar ambos campos.");
     }
